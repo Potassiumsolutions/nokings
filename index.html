@@ -6,6 +6,12 @@
 <meta name="theme-color" content="#2a0f12">
 <title>No Kings</title>
 <link rel="manifest" href="manifest.json">
+<!-- iOS / iPhone add-to-home-screen -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="No Kings">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
 <style>
   :root{
     --bg:#1c1013; --panel:#2a1418; --panel2:#361a1f; --ink:#f4ece0; --muted:#c9a98f;
@@ -21,14 +27,16 @@
     background:radial-gradient(circle at 50% -10%, #3a1a20, var(--bg) 60%);
     color:var(--ink); font-family:"Georgia","Times New Roman",serif;
     -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    -webkit-text-size-adjust:100%; text-size-adjust:100%;
+    -webkit-tap-highlight-color:transparent;
   }
   h1,h2,h3{font-weight:700;margin:0}
   button{font-family:inherit;cursor:pointer}
-  .wrap{max-width:1100px;margin:0 auto;padding:12px}
+  .wrap{max-width:1100px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top,0px)) 12px 12px}
   .hidden{display:none!important}
 
   /* ---- Setup screen ---- */
-  #setup{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding:24px}
+  #setup{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding:calc(24px + env(safe-area-inset-top,0px)) 24px calc(24px + env(safe-area-inset-bottom,0px))}
   .hero{width:min(680px,94vw);border-radius:14px;border:1px solid var(--line);
     box-shadow:0 14px 46px rgba(0,0,0,.55);display:block}
   .logo{font-size:clamp(40px,10vw,84px);letter-spacing:2px;line-height:.95;
@@ -93,7 +101,7 @@
   .promoted{filter:drop-shadow(0 0 4px var(--gold))}
 
   /* hand dock */
-  .dock{max-width:1100px;margin:0 auto;background:linear-gradient(#2a1418,#1c1013);border-top:2px solid var(--gold);box-shadow:0 -6px 20px rgba(0,0,0,.35);padding:10px 12px 18px}
+  .dock{max-width:1100px;margin:0 auto;background:linear-gradient(#2a1418,#1c1013);border-top:2px solid var(--gold);box-shadow:0 -6px 20px rgba(0,0,0,.35);padding:10px 12px calc(18px + env(safe-area-inset-bottom,0px))}
   .dock .hdr{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
   .dock .hdr .you{color:var(--gold);font-weight:700}
   .hand{display:flex;gap:8px;overflow-x:auto;padding:6px 2px 10px;scrollbar-width:thin}
@@ -163,7 +171,7 @@
   /* ---- Settings & Credits ---- */
   .btn-ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px 20px;font-size:16px}
   .btn-ghost:active{transform:translateY(1px)}
-  #settings{min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px}
+  #settings{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;gap:16px;padding:calc(24px + env(safe-area-inset-top,0px)) 24px calc(24px + env(safe-area-inset-bottom,0px))}
   .menu-top{width:min(440px,92vw);display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
   .logo-sm{font-size:26px;letter-spacing:2px;color:var(--gold)}.logo-sm .no{color:var(--red)}
   .setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 2px;border-bottom:1px solid var(--line)}
@@ -179,7 +187,7 @@
   .credits-foot a{color:var(--gold);text-decoration:none}
 
   /* ---- Rules (in-app) ---- */
-  #rules{min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:14px;padding:20px}
+  #rules{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;gap:14px;padding:calc(20px + env(safe-area-inset-top,0px)) 20px calc(20px + env(safe-area-inset-bottom,0px))}
   .rules-doc{max-width:640px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px}
   .rules-doc h2{color:var(--gold);font-size:15px;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:4px;margin:20px 0 8px}
   .rules-doc h2:first-child{margin-top:0}
@@ -341,7 +349,7 @@
 <!-- fallen-king topple cinematic -->
 <div id="toppleVid" onclick="hideToppleVid()">
   <button class="skip" onclick="hideToppleVid()">Skip &#9654;</button>
-  <video id="toppleVideo" src="assets/topple-king.mp4" muted playsinline preload="auto"></video>
+  <video id="toppleVideo" src="assets/topple-king.mp4" muted playsinline webkit-playsinline preload="auto"></video>
 </div>
 
 <!-- TOPPLE GUIDE (desktop, toggle in settings) -->
@@ -467,8 +475,15 @@ function applyMusic(){
   bg.volume=MUS.vol;
   if(MUS.on) bg.play().catch(()=>{}); else bg.pause();
 }
-/* browsers block audio until the first user gesture — start then */
-document.addEventListener('pointerdown',function unlock(){ if(MUS.on) applyMusic(); },{once:true});
+/* iOS/Safari block media until a user gesture. On the first tap, prime the audio path and
+   the topple video — even when music is OFF — so SFX/voices and the cinematic can play later.
+   iOS only unlocks on a real (unmuted) gesture-play, so we prime one SFX element at volume 0. */
+document.addEventListener('pointerdown',function unlock(){
+  try{ const v=document.getElementById('toppleVideo'); if(v){ v.muted=true; const p=v.play(); if(p&&p.then) p.then(()=>{try{v.pause();v.currentTime=0;}catch(e){}}).catch(()=>{}); } }catch(e){}
+  try{ const firstBed=window.SFX && Object.values(window.SFX)[0] && Object.values(window.SFX)[0].bed;
+       if(firstBed){ const a=_sfxAudio(firstBed); a.volume=0; const p=a.play(); if(p&&p.then) p.then(()=>{try{a.pause();a.currentTime=0;}catch(e){}}).catch(()=>{}); } }catch(e){}
+  if(MUS.on) applyMusic();
+},{once:true});
 
 function showSettings(show){
   document.getElementById('setup').classList.toggle('hidden',show);
