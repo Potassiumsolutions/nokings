@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# local dev tooling
+.claude/
+
+# large source / working files (kept locally, not served by the app)
+Vid/
+AUDIO/
+*.wav
+*.docx
+~$*
+_rules_print.html
+Gemini_Generated_Image_*.jpg
+Banner image.jpg
+/No Kings Table.mp3
+/Topple the Crown.mp3
+
+# art backups & build/review montages (not served)
+assets/cartoon_backup_prebadge/
+assets/cartoon_v1_original/
+assets/cartoon_backup*/
+assets/_*

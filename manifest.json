@@ -1,0 +1,14 @@
+{
+  "name": "No Kings",
+  "short_name": "No Kings",
+  "description": "A card game about toppling monarchy. First to 50 wins.",
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1c1013",
+  "theme_color": "#2a0f12",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
