@@ -97,11 +97,13 @@
   .dock .hdr{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
   .dock .hdr .you{color:var(--gold);font-weight:700}
   .hand{display:flex;gap:8px;overflow-x:auto;padding:6px 2px 10px;scrollbar-width:thin}
-  .hand .card{width:74px;height:104px;flex:0 0 auto;transition:transform .12s}
+  .hand .card{width:92px;height:130px;flex:0 0 auto;transition:transform .12s}
   .hand .card.sel{transform:translateY(-14px);box-shadow:0 8px 18px rgba(201,162,75,.5);outline:2px solid var(--gold)}
-  .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .actions{display:flex;gap:6px;flex-wrap:nowrap;align-items:stretch}
   .actions .grow{flex:1}
-  .btn-act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px 16px;font-size:15px;font-weight:700}
+  .btn-act{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;
+    padding:9px 3px;font-size:12px;font-weight:700;flex:1 1 0;min-width:0;white-space:nowrap;text-align:center;overflow:hidden;text-overflow:ellipsis}
+  @media (min-width:520px){.btn-act{padding:11px 10px;font-size:14px}}
   .btn-act.primary{background:linear-gradient(#d8b45a,#b7902f);color:#241014;border:none}
   .btn-act.on{background:var(--gold);color:#241014;border-color:var(--gold)}
   .btn-act.mustend{background:linear-gradient(#f0d060,#d8a838);color:#241014;border:none;animation:mustendPulse 1.2s ease-in-out infinite}
@@ -156,7 +158,7 @@
   .scoretable{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
   .scoretable td,.scoretable th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}
   .scoretable td.n{text-align:right;font-variant-numeric:tabular-nums}
-  @media (max-width:560px){.hand .card{width:64px;height:90px}}
+  @media (max-width:560px){.hand .card{width:82px;height:116px}}
 
   /* ---- Settings & Credits ---- */
   .btn-ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px 20px;font-size:16px}
@@ -367,10 +369,10 @@
   <div class="hint" id="hint"></div>
   <div class="actions">
     <button class="btn-act primary" id="btnDraw" onclick="humanDraw()">Draw</button>
-    <button class="btn-act" id="btnTopple" onclick="humanTopple()">Topple ▸</button>
+    <button class="btn-act" id="btnTopple" onclick="humanTopple()">Topple</button>
     <button class="btn-act" id="btnClear" onclick="clearSel()">Clear</button>
-    <button class="btn-act" id="btnEnd" onclick="humanEndTurn()">End turn</button>
-    <button class="btn-act" id="btnGuide" onclick="toggleGuide()">⚔ Guide</button>
+    <button class="btn-act" id="btnEnd" onclick="humanEndTurn()">End</button>
+    <button class="btn-act" id="btnGuide" onclick="toggleGuide()">Guide</button>
   </div>
   <div class="lh" style="color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin:6px 0 2px;opacity:.85">Play log</div>
   <div id="log"></div>
@@ -870,7 +872,12 @@ function handCardClick(id){
     if(kindOf(c)==='jack'){ updateHint('Jacks can’t be discarded — they may rise as Promoted Kings. Discard something else.'); return; }
     p.hand=p.hand.filter(x=>x.id!==id); G.discard.push(c);
     log(`You discarded ${cardName(c)} (over limit).`);
-    if(p.hand.length<=HAND_LIMIT){updateHint('Good. Play a combo or end your turn.');setDiscardMode(false);refreshActions('play');}
+    if(p.hand.length<=HAND_LIMIT){
+      setDiscardMode(false);
+      noMovesLeft = !hasAnyTopple(p);
+      updateHint(noMovesLeft ? 'No plays available — end your turn.' : 'Good. Play a combo or end your turn.');
+      refreshActions('play');
+    }
     render(); return;
   }
   toggleSel(id);
