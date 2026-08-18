@@ -845,7 +845,28 @@ function previewCombo(){
   const ev=evaluateCombo(cards, targetKingId);
   if(ev.ok){
     updateHint('✓ '+ev.desc+(ev.requiresTarget&&!targetKingId?' — now tap a King on the table.':'  Tap “Topple”.'));
-  } else updateHint('… '+ (ev.msg||'Not a valid combo yet.'));
+  } else updateHint('… '+ nearMissHint(cards, ev));
+}
+/* Guide the player when they're one card short of a Riot or Revolt (a common cause
+   of "that's not a combo" when a card scrolled off-screen and wasn't tapped). */
+function nearMissHint(cards, ev){
+  const nums=cards.filter(c=>kindOf(c)==='num');
+  // partial Riot: two number cards of the same rank -> need one more
+  const byRank={}; nums.forEach(c=>{ (byRank[c.rank]=byRank[c.rank]||[]).push(c); });
+  for(const rk in byRank){ if(byRank[rk].length===2)
+    return `Two ${rk}s selected — tap <b>one more ${rk}</b> (scroll your hand if needed) for a <b>Riot</b>.`; }
+  // partial Revolt: a same-suit consecutive run of 2–3 -> need 4+
+  if(nums.length>=2 && nums.length<=3){
+    const bySuit={}; nums.forEach(c=>{ (bySuit[c.suit]=bySuit[c.suit]||[]).push(c); });
+    for(const su in bySuit){ const g=bySuit[su];
+      if(g.length===nums.length){
+        const rv=g.map(c=>R(c).run).sort((a,b)=>a-b); let consec=true;
+        for(let i=1;i<rv.length;i++) if(rv[i]!==rv[i-1]+1){ consec=false; break; }
+        if(consec) return `A same-suit run of ${g.length} — a <b>Revolt</b> needs <b>4 or more</b> in a row.`;
+      }
+    }
+  }
+  return ev.msg||'Not a valid combo yet.';
 }
 function pickTarget(id){
   if(!isHumanTurn())return;
