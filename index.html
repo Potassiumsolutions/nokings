@@ -220,10 +220,6 @@
       <label>You vs.</label>
       <div class="seg" id="segMode"></div>
     </div>
-    <div class="field">
-      <label>Deck style</label>
-      <div class="seg" id="segDeck"></div>
-    </div>
     <div style="text-align:center;margin-top:18px">
       <button class="btn-primary" onclick="startGame()">START GAME</button>
     </div>
@@ -443,7 +439,7 @@ const R = c=>c.joker?null:rankByK[c.rank];
 const kindOf = c=>c.joker?'joker':R(c).kind;
 
 /* ============================ SETUP UI ============================ */
-let cfg={players:4,mode:'ai',deck:'ornate'};
+let cfg={players:4,mode:'ai',deck:'cartoon'};
 function buildSetup(){
   const sp=document.getElementById('segPlayers'); sp.innerHTML='';
   [2,3,4,5,6].forEach(n=>{const b=document.createElement('button');b.textContent=n;
@@ -454,9 +450,6 @@ function buildSetup(){
   const sm=document.getElementById('segMode'); sm.innerHTML='';
   [['ai','Computer'],['hotseat','Pass & play']].forEach(([v,t])=>{const b=document.createElement('button');
     b.textContent=t;b.className=cfg.mode===v?'on':'';b.onclick=()=>{cfg.mode=v;buildSetup();};sm.appendChild(b);});
-  const sd=document.getElementById('segDeck'); sd.innerHTML='';
-  [['ornate','Ornate'],['cartoon','Cartoon']].forEach(([v,t])=>{const b=document.createElement('button');
-    b.textContent=t;b.className=cfg.deck===v?'on':'';b.onclick=()=>{cfg.deck=v;buildSetup();};sd.appendChild(b);});
 }
 buildSetup();
 

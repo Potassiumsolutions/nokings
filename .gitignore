@@ -11,10 +11,14 @@ AUDIO/
 *.docx
 ~$*
 _rules_print.html
+_booklet_print.html
 Gemini_Generated_Image_*.jpg
 Banner image.jpg
 /No Kings Table.mp3
 /Topple the Crown.mp3
+
+# retired ornate deck — preserved locally, not served (removed to shrink the app)
+archive-ornate-deck/
 
 # art backups & build/review montages (not served)
 assets/cartoon_backup_prebadge/
