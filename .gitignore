@@ -25,3 +25,6 @@ assets/cartoon_backup_prebadge/
 assets/cartoon_v1_original/
 assets/cartoon_backup*/
 assets/_*
+
+# app-only number-card originals (pre big-index overlay)
+assets/cartoon/_num_orig_backup/
