@@ -95,7 +95,10 @@
   .table-area{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:10px;min-height:96px}
   .table-area h3{color:var(--muted);font-size:13px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
   .table-kings{display:flex;gap:8px;flex-wrap:wrap}
-  .king-chip{position:relative;cursor:pointer;border-radius:8px}
+  .king-chip{position:relative;cursor:pointer;border-radius:8px;transition:transform .16s ease,box-shadow .16s ease;transform-origin:center center}
+  /* magnify the king you point at (mouse hover), press (finger), or have targeted */
+  .king-chip:hover,.king-chip:active,.king-chip.target{transform:scale(1.85);z-index:40;box-shadow:0 10px 28px rgba(0,0,0,.6)}
+  .king-chip:hover .owner,.king-chip:active .owner,.king-chip.target .owner{font-size:8px;bottom:-13px}
   .king-chip.target{outline:3px solid var(--gold);outline-offset:2px}
   .king-chip .owner{position:absolute;bottom:-16px;left:0;right:0;text-align:center;font-size:10px;color:var(--muted)}
   .promoted{filter:drop-shadow(0 0 4px var(--gold))}
