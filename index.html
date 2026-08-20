@@ -201,6 +201,16 @@
   .rules-doc b{color:#fff}.rules-doc .hi{color:var(--gold)}
   .rules-link{color:var(--gold);text-decoration:none;font-size:14px;white-space:nowrap}
   .rules-lead{color:var(--muted);font-style:italic;text-align:center}
+  #about{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;gap:14px;padding:calc(20px + env(safe-area-inset-top,0px)) 20px calc(20px + env(safe-area-inset-bottom,0px))}
+  .about-doc{max-width:520px;width:100%}
+  .store-btn{display:flex;align-items:center;gap:12px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin:10px 0;text-decoration:none;color:var(--ink);transition:border-color .15s,transform .12s}
+  .store-btn:hover{border-color:var(--gold);transform:translateY(-1px)}
+  .store-btn .em{font-size:24px;flex:0 0 auto;line-height:1}
+  .store-btn .st{display:flex;flex-direction:column;gap:2px}
+  .store-btn .st b{color:#fff;font-size:15px}
+  .store-btn .st span{color:var(--muted);font-size:12.5px}
+  .about-links{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+  .about-links a{color:var(--gold);text-decoration:none;font-size:14px;font-weight:600}
 </style>
 </head>
 <body>
@@ -225,6 +235,7 @@
     </div>
   </div>
   <button class="btn-ghost" onclick="showSettings(true)">&#9881; Settings &amp; Credits</button>
+  <button class="btn-ghost" onclick="showAbout(true,'setup')">&#9432; About &amp; Get the Game</button>
   <footer class="credits-foot">
     <b><span style="color:var(--red)">NO</span> KINGS</b> &middot; Created by Paul A.T. Ramey<br>
     <a href="https://www.ksoldesigns.com" target="_blank" rel="noopener">www.ksoldesigns.com</a> &middot; Potassium Solutions
@@ -321,12 +332,43 @@
   </div>
 </div>
 
+<!-- ABOUT / STORE -->
+<div id="about" class="hidden">
+  <div class="menu-top">
+    <button class="btn-sm" onclick="showAbout(false)">&#8249; Back</button>
+    <div class="logo-sm"><span class="no">NO</span> KINGS</div>
+    <span style="width:64px"></span>
+  </div>
+  <div class="about-doc">
+    <p class="rules-lead">Love the game? Bring it to the table. Order a beautifully illustrated physical deck — or the printed rules — from The Game Crafter.</p>
+
+    <a class="store-btn" href="https://www.thegamecrafter.com/games/no-kings-2-to-4" target="_blank" rel="noopener">
+      <span class="em">&#127183;</span>
+      <span class="st"><b>No Kings &mdash; Standard Edition</b><span>4 suits &middot; 2&ndash;4 players &middot; 54 cards</span></span>
+    </a>
+    <a class="store-btn" href="https://www.thegamecrafter.com/games/no-kings-2-to-6" target="_blank" rel="noopener">
+      <span class="em">&#128081;</span>
+      <span class="st"><b>No Kings &mdash; Full Edition</b><span>6 suits &middot; 2&ndash;6 players &middot; 84 cards</span></span>
+    </a>
+    <a class="store-btn" href="https://www.thegamecrafter.com/games/no-kings-instructions" target="_blank" rel="noopener">
+      <span class="em">&#128214;</span>
+      <span class="st"><b>No Kings &mdash; Rulebook</b><span>The printed fold-out rules</span></span>
+    </a>
+
+    <div class="about-links">
+      <a href="https://www.ksoldesigns.com" target="_blank" rel="noopener">ksoldesigns.com</a>
+      <a href="https://github.com/Potassiumsolutions/nokings" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</div>
+
 <!-- GAME -->
 <div id="game" class="wrap hidden">
   <div class="topbar">
     <div class="title"><span style="color:var(--red)">NO</span> KINGS</div>
     <div class="pill" id="deckCount">Deck 0</div>
     <div class="pill" id="phasePill">—</div>
+    <button class="btn-sm" onclick="showSettings(true,'game')" title="Settings">&#9881;</button>
     <button class="btn-sm" onclick="if(confirm('Quit to menu?'))location.reload()">Menu</button>
   </div>
 
@@ -478,10 +520,30 @@ document.addEventListener('pointerdown',function unlock(){
   if(MUS.on) applyMusic();
 },{once:true});
 
-function showSettings(show){
-  document.getElementById('setup').classList.toggle('hidden',show);
-  document.getElementById('settings').classList.toggle('hidden',!show);
-  if(show) renderSettings();
+let _settingsReturn='setup';   // which screen to restore when leaving Settings
+function showSettings(show,from){
+  if(show){
+    // remember the origin so in-game Settings returns to the board, not the menu
+    _settingsReturn = from || (document.getElementById('game') && !document.getElementById('game').classList.contains('hidden') ? 'game' : 'setup');
+    document.getElementById(_settingsReturn).classList.add('hidden');
+    document.getElementById('settings').classList.remove('hidden');
+    renderSettings(); window.scrollTo(0,0);
+  } else {
+    document.getElementById('settings').classList.add('hidden');
+    document.getElementById(_settingsReturn).classList.remove('hidden');
+  }
+}
+let _aboutReturn='setup';
+function showAbout(show,from){
+  if(show){
+    _aboutReturn = from || 'setup';
+    document.getElementById(_aboutReturn).classList.add('hidden');
+    document.getElementById('about').classList.remove('hidden');
+    window.scrollTo(0,0);
+  } else {
+    document.getElementById('about').classList.add('hidden');
+    document.getElementById(_aboutReturn).classList.remove('hidden');
+  }
 }
 function renderSettings(){
   const tg=document.getElementById('tglMusic');
