@@ -222,7 +222,7 @@
 <!-- SETUP -->
 <div id="setup">
   <img class="hero" src="assets/banner.jpg" alt="NO KINGS — Eliminate the Reign">
-  <div class="tag">Topple every crown. Get caught holding a King and forfeit the round. First to 50 points wins.</div>
+  <div class="tag">Topple every crown. Get caught holding a King and forfeit the round. First to 50 points wins — or 20 for a Short Game.</div>
   <div class="setup-card">
     <div class="field">
       <label>Players</label>
@@ -253,6 +253,7 @@
     <button class="btn-sm" onclick="showRules(true)">&#128214; Rules</button>
   </div>
   <div class="setup-card">
+    <div class="field"><label>Game length</label><div class="seg" id="segLen"></div></div>
     <div class="setrow"><span>Background music</span><button class="tgl" id="tglMusic" onclick="toggleMusic()">On</button></div>
     <div class="field"><label>Music track</label><div class="seg" id="segTrack"></div></div>
     <div class="setrow"><span>Volume</span><input type="range" id="volMusic" min="0" max="100" step="5" oninput="setMusVol(this.value)"></div>
@@ -275,7 +276,7 @@
     <a class="rules-link" href="No-Kings-Rules.pdf" target="_blank" rel="noopener">&#128424;&#65039; Print / PDF</a>
   </div>
   <div class="rules-doc">
-    <p class="rules-lead">The realm of Cardlandia is fracturing. Topple the old regime, claim the glory — but if tyranny secures a stronghold before the revolution succeeds, the crown wins. First to <b class="hi">50 points</b> founds the new order.</p>
+    <p class="rules-lead">The realm of Cardlandia is fracturing. Topple the old regime, claim the glory — but if tyranny secures a stronghold before the revolution succeeds, the crown wins. First to <b class="hi">50 points</b> founds the new order — or pick a <b class="hi">Short Game (20 points)</b> in Settings for a quicker uprising.</p>
 
     <h2>The Cast &amp; the Deck</h2>
     <p>A standard 52-card deck with the court renamed, plus 4 wild Jokers.</p>
@@ -331,7 +332,7 @@
     <p><b>Generals' coup:</b> hold <b>all 4 Generals</b> when the <b>4th King</b> is played and you may claim the <b>+10</b> instead of whoever raised the Kings.</p>
 
     <h2>Ending a Round</h2>
-    <p>A round ends when <b>either</b> a player has <b>4 Kings standing</b> (a tyrannical dynasty is secured — <i>a loss for society, a win for the individual</i>), <b>or</b> the <b>draw deck is played through once</b>. Tally scores, reshuffle, next round. <b>First to 50 wins.</b> The "four" thresholds stay at four even in 5–6 player games.</p>
+    <p>A round ends when <b>either</b> a player has <b>4 Kings standing</b> (a tyrannical dynasty is secured — <i>a loss for society, a win for the individual</i>), <b>or</b> the <b>draw deck is played through once</b>. Tally scores, reshuffle, next round. <b>First to 50 wins</b> — or <b>20</b> in a Short Game (choose your length in Settings). The "four" thresholds stay at four even in 5–6 player games.</p>
   </div>
 </div>
 
@@ -457,7 +458,11 @@ const RANKS = [
   {k:'K', label:'K', name:'King',    kind:'king', val:0, run:13, glyph:'♔'},
 ];
 const rankByK = Object.fromEntries(RANKS.map(r=>[r.k,r]));
-const HAND_LIMIT=7, WIN_SCORE=50, NUM_JOKERS=2;
+const HAND_LIMIT=7, NUM_JOKERS=2;
+/* Game length: Standard (50) or Short (20). Persisted; read at scoring time. */
+const WIN_LS='nokings.wintarget';
+let WIN_SCORE = (parseInt(localStorage.getItem(WIN_LS),10)===20) ? 20 : 50;
+function setWinTarget(n){ WIN_SCORE = (n===20?20:50); localStorage.setItem(WIN_LS,String(WIN_SCORE)); renderSettings(); }
 
 /* ============================ STATE ============================ */
 let G = null;
@@ -549,6 +554,10 @@ function showAbout(show,from){
   }
 }
 function renderSettings(){
+  const sl=document.getElementById('segLen');
+  if(sl){ sl.innerHTML='';
+    [[50,'Standard · 50'],[20,'Short · 20']].forEach(([n,t])=>{ const b=document.createElement('button');
+      b.textContent=t; b.className=WIN_SCORE===n?'on':''; b.onclick=()=>setWinTarget(n); sl.appendChild(b); }); }
   const tg=document.getElementById('tglMusic');
   tg.textContent=MUS.on?'On':'Off'; tg.classList.toggle('on',MUS.on);
   const ts=document.getElementById('tglSfx');
