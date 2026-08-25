@@ -222,24 +222,24 @@
 <!-- SETUP -->
 <div id="setup">
   <img class="hero" src="assets/banner.jpg" alt="NO KINGS — Eliminate the Reign">
-  <div class="tag">Topple every crown. Get caught holding a King and forfeit the round. First to 50 points wins — or 20 for a Short Game.</div>
+  <div class="tag" data-i18n="setup.tag">Topple every crown. Get caught holding a King and forfeit the round. First to 50 points wins — or 20 for a Short Game.</div>
   <div class="setup-card">
     <div class="field">
-      <label>Players</label>
+      <label data-i18n="setup.players">Players</label>
       <div class="seg" id="segPlayers"></div>
       <div class="mini" id="playersNote"></div>
     </div>
     <div class="field">
-      <label>You vs.</label>
+      <label data-i18n="setup.youvs">You vs.</label>
       <div class="seg" id="segMode"></div>
     </div>
     <div style="text-align:center;margin-top:18px">
-      <button class="btn-primary" onclick="startGame()">START GAME</button>
+      <button class="btn-primary" data-i18n="setup.start" onclick="startGame()">START GAME</button>
     </div>
   </div>
-  <button class="btn-ghost" onclick="showSettings(true)">&#9881; Settings &amp; Credits</button>
-  <button class="btn-ghost" onclick="showAbout(true,'setup')">&#9432; About &amp; Get the Game</button>
-  <footer class="credits-foot">
+  <button class="btn-ghost" data-i18n="setup.settings" onclick="showSettings(true)">&#9881; Settings &amp; Credits</button>
+  <button class="btn-ghost" data-i18n="setup.about" onclick="showAbout(true,'setup')">&#9432; About &amp; Get the Game</button>
+  <footer class="credits-foot" data-i18n-html="foot.created">
     <b><span style="color:var(--red)">NO</span> KINGS</b> &middot; Created by Paul A.T. Ramey<br>
     <a href="https://www.ksoldesigns.com" target="_blank" rel="noopener">www.ksoldesigns.com</a> &middot; Potassium Solutions
   </footer>
@@ -248,22 +248,23 @@
 <!-- SETTINGS & CREDITS -->
 <div id="settings" class="hidden">
   <div class="menu-top">
-    <button class="btn-sm" onclick="showSettings(false)">&#8249; Back</button>
+    <button class="btn-sm" data-i18n="ui.back" onclick="showSettings(false)">&#8249; Back</button>
     <div class="logo-sm"><span class="no">NO</span> KINGS</div>
-    <button class="btn-sm" onclick="showRules(true)">&#128214; Rules</button>
+    <button class="btn-sm" data-i18n="ui.rules" onclick="showRules(true)">&#128214; Rules</button>
   </div>
   <div class="setup-card">
-    <div class="field"><label>Game length</label><div class="seg" id="segLen"></div></div>
-    <div class="setrow"><span>Background music</span><button class="tgl" id="tglMusic" onclick="toggleMusic()">On</button></div>
-    <div class="field"><label>Music track</label><div class="seg" id="segTrack"></div></div>
-    <div class="setrow"><span>Volume</span><input type="range" id="volMusic" min="0" max="100" step="5" oninput="setMusVol(this.value)"></div>
-    <div class="setrow"><span>Sound effects &amp; voices</span><button class="tgl" id="tglSfx" onclick="toggleSfx()">On</button></div>
-    <div class="setrow"><span>Fallen-King video</span><button class="tgl" id="tglVid" onclick="toggleVid()">On</button></div>
+    <div class="setrow"><span data-i18n="set.language">Language</span><div class="seg" id="segLang"></div></div>
+    <div class="field"><label data-i18n="set.gamelen">Game length</label><div class="seg" id="segLen"></div></div>
+    <div class="setrow"><span data-i18n="set.music">Background music</span><button class="tgl" id="tglMusic" onclick="toggleMusic()">On</button></div>
+    <div class="field"><label data-i18n="set.track">Music track</label><div class="seg" id="segTrack"></div></div>
+    <div class="setrow"><span data-i18n="set.volume">Volume</span><input type="range" id="volMusic" min="0" max="100" step="5" oninput="setMusVol(this.value)"></div>
+    <div class="setrow"><span data-i18n="set.sfx">Sound effects &amp; voices</span><button class="tgl" id="tglSfx" onclick="toggleSfx()">On</button></div>
+    <div class="setrow"><span data-i18n="set.vid">Fallen-King video</span><button class="tgl" id="tglVid" onclick="toggleVid()">On</button></div>
   </div>
   <div class="setup-card credits">
-    <h3 class="credits-h">Credits</h3>
-    <p>Game design &amp; art &mdash; <b>Paul A.T. Ramey</b></p>
-    <p>Music &mdash; &ldquo;No Kings Table&rdquo; &amp; &ldquo;Topple the Crown&rdquo;</p>
+    <h3 class="credits-h" data-i18n="credits.h">Credits</h3>
+    <p data-i18n-html="credits.design">Game design &amp; art &mdash; <b>Paul A.T. Ramey</b></p>
+    <p data-i18n-html="credits.music">Music &mdash; &ldquo;No Kings Table&rdquo; &amp; &ldquo;Topple the Crown&rdquo;</p>
     <p><a href="https://www.ksoldesigns.com" target="_blank" rel="noopener">www.ksoldesigns.com</a><br>Potassium Solutions &middot; Kiki&rsquo;s Custom Engraving</p>
   </div>
 </div>
@@ -271,11 +272,11 @@
 <!-- RULES (in-app) -->
 <div id="rules" class="hidden">
   <div class="menu-top">
-    <button class="btn-sm" onclick="showRules(false)">&#8249; Back</button>
+    <button class="btn-sm" data-i18n="ui.back" onclick="showRules(false)">&#8249; Back</button>
     <div class="logo-sm"><span class="no">NO</span> KINGS</div>
-    <a class="rules-link" href="No-Kings-Rules.pdf" target="_blank" rel="noopener">&#128424;&#65039; Print / PDF</a>
+    <a class="rules-link" data-i18n="ui.printpdf" href="No-Kings-Rules.pdf" target="_blank" rel="noopener">&#128424;&#65039; Print / PDF</a>
   </div>
-  <div class="rules-doc">
+  <div class="rules-doc" id="rulesBody">
     <p class="rules-lead">The realm of Cardlandia is fracturing. Topple the old regime, claim the glory — but if tyranny secures a stronghold before the revolution succeeds, the crown wins. First to <b class="hi">50 points</b> founds the new order — or pick a <b class="hi">Short Game (20 points)</b> in Settings for a quicker uprising.</p>
 
     <h2>The Cast &amp; the Deck</h2>
@@ -339,24 +340,24 @@
 <!-- ABOUT / STORE -->
 <div id="about" class="hidden">
   <div class="menu-top">
-    <button class="btn-sm" onclick="showAbout(false)">&#8249; Back</button>
+    <button class="btn-sm" data-i18n="ui.back" onclick="showAbout(false)">&#8249; Back</button>
     <div class="logo-sm"><span class="no">NO</span> KINGS</div>
     <span style="width:64px"></span>
   </div>
   <div class="about-doc">
-    <p class="rules-lead">Love the game? Bring it to the table. Order a beautifully illustrated physical deck — or the printed rules — from The Game Crafter.</p>
+    <p class="rules-lead" data-i18n="about.lead">Love the game? Bring it to the table. Order a beautifully illustrated physical deck — or the printed rules — from The Game Crafter.</p>
 
     <a class="store-btn" href="https://www.thegamecrafter.com/games/no-kings-2-to-4" target="_blank" rel="noopener">
       <span class="em">&#127183;</span>
-      <span class="st"><b>No Kings &mdash; Standard Edition</b><span>4 suits &middot; 2&ndash;4 players &middot; 54 cards</span></span>
+      <span class="st"><b>No Kings &mdash; Standard Edition</b><span data-i18n="about.std.sub">4 suits &middot; 2&ndash;4 players &middot; 54 cards</span></span>
     </a>
     <a class="store-btn" href="https://www.thegamecrafter.com/games/no-kings-2-to-6" target="_blank" rel="noopener">
       <span class="em">&#128081;</span>
-      <span class="st"><b>No Kings &mdash; Full Edition</b><span>6 suits &middot; 2&ndash;6 players &middot; 84 cards</span></span>
+      <span class="st"><b>No Kings &mdash; Full Edition</b><span data-i18n="about.full.sub">6 suits &middot; 2&ndash;6 players &middot; 84 cards</span></span>
     </a>
     <a class="store-btn" href="https://www.thegamecrafter.com/games/no-kings-instructions" target="_blank" rel="noopener">
       <span class="em">&#128214;</span>
-      <span class="st"><b>No Kings &mdash; Rulebook</b><span>The printed fold-out rules</span></span>
+      <span class="st"><b>No Kings &mdash; Rulebook</b><span data-i18n="about.rules.sub">The printed fold-out rules</span></span>
     </a>
 
     <div class="about-links">
@@ -372,14 +373,14 @@
     <div class="title"><span style="color:var(--red)">NO</span> KINGS</div>
     <div class="pill" id="deckCount">Deck 0</div>
     <div class="pill" id="phasePill">—</div>
-    <button class="btn-sm" onclick="showSettings(true,'game')" title="Settings">&#9881; Settings</button>
-    <button class="btn-sm" onclick="if(confirm('Quit to menu?'))location.reload()">Menu</button>
+    <button class="btn-sm" data-i18n="game.settings" onclick="showSettings(true,'game')" title="Settings">&#9881; Settings</button>
+    <button class="btn-sm" data-i18n="game.menu" onclick="quitToMenu()">Menu</button>
   </div>
 
   <div class="opponents" id="opponents"></div>
 
   <div class="table-area">
-    <h3>Kings standing on the table <span class="mini" id="tableHint"></span></h3>
+    <h3><span data-i18n="table.h3">Kings standing on the table</span> <span class="mini" id="tableHint"></span></h3>
     <div class="table-kings" id="tableKings"></div>
   </div>
 
@@ -396,15 +397,15 @@
 
 <!-- TOPPLE GUIDE (desktop, toggle in settings) -->
 <div id="feed" class="hidden">
-  <div class="fh"><span>Topple a King</span><span class="x" title="Close" onclick="toggleGuide(false)">&times;</span></div>
+  <div class="fh"><span data-i18n="guide.title">Topple a King</span><span class="x" title="Close" onclick="toggleGuide(false)">&times;</span></div>
   <div class="reflist">
-    <div class="ref"><b>Palace Coup</b> · any 2 high cards<span>Q / J / General pair → 1 crown</span></div>
-    <div class="ref"><b>Royal bloodline</b> · same-suit Queen + General<span>ALL of a rival's crowns</span></div>
-    <div class="ref"><b>Holy Decree</b> · 1 matching Bishop<span>1 same-suit crown</span></div>
-    <div class="ref"><b>Two Bishops</b><span>any crown</span></div>
-    <div class="ref"><b>Riot</b> · three of a kind (2–9)<span>1 crown</span></div>
-    <div class="ref"><b>Revolt</b> · same-suit run of 4 / 5 / 6+<span>→ 1 / 2 / 3 crowns</span></div>
-    <div class="ref promo"><b>Promoted Kings</b><span>1 General, or Joker + General (after all Kings fall)</span></div>
+    <div class="ref" data-i18n-html="guide.r1"><b>Palace Coup</b> · any 2 high cards<span>Q / J / General pair → 1 crown</span></div>
+    <div class="ref" data-i18n-html="guide.r2"><b>Royal bloodline</b> · same-suit Queen + General<span>ALL of a rival's crowns</span></div>
+    <div class="ref" data-i18n-html="guide.r3"><b>Holy Decree</b> · 1 matching Bishop<span>1 same-suit crown</span></div>
+    <div class="ref" data-i18n-html="guide.r4"><b>Two Bishops</b><span>any crown</span></div>
+    <div class="ref" data-i18n-html="guide.r5"><b>Riot</b> · three of a kind (2–9)<span>1 crown</span></div>
+    <div class="ref" data-i18n-html="guide.r6"><b>Revolt</b> · same-suit run of 4 / 5 / 6+<span>→ 1 / 2 / 3 crowns</span></div>
+    <div class="ref promo" data-i18n-html="guide.r7"><b>Promoted Kings</b><span>1 General, or Joker + General (after all Kings fall)</span></div>
   </div>
 </div>
 
@@ -418,16 +419,17 @@
   <div class="hand" id="hand"></div>
   <div class="hint" id="hint"></div>
   <div class="actions">
-    <button class="btn-act primary" id="btnDraw" onclick="humanDraw()">Draw</button>
-    <button class="btn-act" id="btnTopple" onclick="humanTopple()">Topple</button>
-    <button class="btn-act" id="btnClear" onclick="clearSel()">Clear</button>
-    <button class="btn-act" id="btnEnd" onclick="humanEndTurn()">End</button>
-    <button class="btn-act" id="btnGuide" onclick="toggleGuide()">Guide</button>
+    <button class="btn-act primary" id="btnDraw" data-i18n="act.draw" onclick="humanDraw()">Draw</button>
+    <button class="btn-act" id="btnTopple" data-i18n="act.topple" onclick="humanTopple()">Topple</button>
+    <button class="btn-act" id="btnClear" data-i18n="act.clear" onclick="clearSel()">Clear</button>
+    <button class="btn-act" id="btnEnd" data-i18n="act.end" onclick="humanEndTurn()">End</button>
+    <button class="btn-act" id="btnGuide" data-i18n="act.guide" onclick="toggleGuide()">Guide</button>
   </div>
-  <div class="lh" style="color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin:6px 0 2px;opacity:.85">Play log</div>
+  <div class="lh" data-i18n="dock.playlog" style="color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin:6px 0 2px;opacity:.85">Play log</div>
   <div id="log"></div>
 </div>
 
+<script src="assets/i18n.js"></script>
 <script src="assets/manifest.js"></script>
 <script src="assets/sfx.js"></script>
 <script>
@@ -495,13 +497,31 @@ function buildSetup(){
   [2,3,4,5,6].forEach(n=>{const b=document.createElement('button');b.textContent=n;
     b.className=n===cfg.players?'on':''; b.onclick=()=>{cfg.players=n;buildSetup();};sp.appendChild(b);});
   document.getElementById('playersNote').textContent =
-    cfg.players<=4? '4 suits (52 cards + jokers).' :
-    cfg.players===5? 'Adds the Anvils suit (green).' : 'Adds Anvils + Wheat suits (green + blue).';
+    cfg.players<=4? t('setup.note4') :
+    cfg.players===5? t('setup.note5') : t('setup.note6');
   const sm=document.getElementById('segMode'); sm.innerHTML='';
-  [['ai','Computer'],['hotseat','Pass & play']].forEach(([v,t])=>{const b=document.createElement('button');
-    b.textContent=t;b.className=cfg.mode===v?'on':'';b.onclick=()=>{cfg.mode=v;buildSetup();};sm.appendChild(b);});
+  [['ai','mode.ai'],['hotseat','mode.hotseat']].forEach(([v,key])=>{const b=document.createElement('button');
+    b.textContent=t(key);b.className=cfg.mode===v?'on':'';b.onclick=()=>{cfg.mode=v;buildSetup();};sm.appendChild(b);});
 }
 buildSetup();
+
+/* ============================ I18N GLUE ============================ */
+let _rulesEnHTML=null;
+function applyI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent=t(el.getAttribute('data-i18n')); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{ el.innerHTML=t(el.getAttribute('data-i18n-html')); });
+  // Rules body: English lives in the DOM (cached once); Spanish comes from the dictionary.
+  const rb=document.getElementById('rulesBody');
+  if(rb){ if(_rulesEnHTML===null) _rulesEnHTML=rb.innerHTML;
+    rb.innerHTML = (window.LANG==='es' && STR.es['rules.body']) ? STR.es['rules.body'] : _rulesEnHTML; }
+}
+window.applyI18n=applyI18n;
+function onLangChange(){ buildSetup(); renderSettings(); if(G && !G.over) render(); }
+window.onLangChange=onLangChange;
+function pname(p){ return p.you ? t('player.you') : t('player.rival',{n:p.idx}); }
+function quitToMenu(){ if(confirm(t('game.quit'))) location.reload(); }
+document.documentElement.lang=window.LANG;
+applyI18n();
 
 /* ============================ MUSIC & SETTINGS ============================ */
 const TRACKS={
@@ -554,16 +574,21 @@ function showAbout(show,from){
   }
 }
 function renderSettings(){
+  const lg=document.getElementById('segLang');
+  if(lg){ lg.innerHTML='';
+    [['en','English'],['es','Español']].forEach(([code,label])=>{ const b=document.createElement('button');
+      b.textContent=label; b.className=window.LANG===code?'on':''; b.onclick=()=>setLang(code); lg.appendChild(b); }); }
   const sl=document.getElementById('segLen');
   if(sl){ sl.innerHTML='';
-    [[50,'Standard · 50'],[20,'Short · 20']].forEach(([n,t])=>{ const b=document.createElement('button');
-      b.textContent=t; b.className=WIN_SCORE===n?'on':''; b.onclick=()=>setWinTarget(n); sl.appendChild(b); }); }
+    [[50,'len.standard'],[20,'len.short']].forEach(([n,key])=>{ const b=document.createElement('button');
+      b.textContent=t(key); b.className=WIN_SCORE===n?'on':''; b.onclick=()=>setWinTarget(n); sl.appendChild(b); }); }
+  const ON=t('toggle.on'), OFF=t('toggle.off');
   const tg=document.getElementById('tglMusic');
-  tg.textContent=MUS.on?'On':'Off'; tg.classList.toggle('on',MUS.on);
+  tg.textContent=MUS.on?ON:OFF; tg.classList.toggle('on',MUS.on);
   const ts=document.getElementById('tglSfx');
-  if(ts){ ts.textContent=SFXon?'On':'Off'; ts.classList.toggle('on',SFXon); }
+  if(ts){ ts.textContent=SFXon?ON:OFF; ts.classList.toggle('on',SFXon); }
   const tv=document.getElementById('tglVid');
-  if(tv){ tv.textContent=VIDon?'On':'Off'; tv.classList.toggle('on',VIDon); }
+  if(tv){ tv.textContent=VIDon?ON:OFF; tv.classList.toggle('on',VIDon); }
   const seg=document.getElementById('segTrack'); seg.innerHTML='';
   Object.entries(TRACKS).forEach(([k,t])=>{ const b=document.createElement('button');
     b.textContent=t.name; b.className=MUS.track===k?'on':'';
@@ -646,8 +671,9 @@ function startGame(){
   const players=[];
   for(let i=0;i<n;i++){
     players.push({
-      id:i, name:i===0?'You':`Rival ${i}`, human:(i===0)|| (cfg.mode==='hotseat'),
+      id:i, you:i===0, idx:i, human:(i===0)|| (cfg.mode==='hotseat'),
       hand:[], kings:[], points:[], score:0,
+      get name(){ return this.you ? t('player.you') : t('player.rival',{n:this.idx}); },
     });
   }
   G={players, deck:buildDeck(n), discard:[], turn:0, promoted:false, kingsInPlay:4* suitsForPlayers(n).length/ n /*unused*/, round:1, over:false};
@@ -657,11 +683,11 @@ function startGame(){
   document.getElementById('game').classList.remove('hidden');
   document.getElementById('dock').classList.remove('hidden');
   resetFeed();
-  log(`<b>Round ${G.round}</b> — ${n} players, ${suitsForPlayers(n).length} suits. Oldest player starts.`);
+  log(t('log.round',{n:G.round, players:n, suits:suitsForPlayers(n).length}));
   render();
   beginTurn();
 }
-function resetFeed(){ const l=document.getElementById('feedList'); if(l) l.innerHTML='<div class="empty">No crowns have fallen yet.</div>'; }
+function resetFeed(){ const l=document.getElementById('feedList'); if(l) l.innerHTML=`<div class="empty">${t('feed.empty')}</div>`; }
 
 /* ============================ TURN FLOW ============================ */
 function cur(){return G.players[G.turn];}
@@ -672,18 +698,18 @@ function beginTurn(){
   targetKingId=null; sel=[]; noMovesLeft=false;
   setDiscardMode(false);
   const p=cur();
-  setPhase(`${p.name}'s turn`);
+  setPhase(t('phase.turn',{name:p.name}));
   render();
-  if(p.human){ updateHint('Draw a card to begin your turn.'); refreshActions('draw'); }
+  if(p.human){ updateHint(t('hint.drawBegin')); refreshActions('draw'); }
   else { setTimeout(aiTurn, 700); }
 }
 
 function drawFor(p){
-  if(G.deck.length===0){ endRound('The deck is exhausted.'); return null; }
+  if(G.deck.length===0){ endRound(t('reason.deck')); return null; }
   const c=G.deck.pop();
   // Kings (and promoted Jacks) must be played immediately
-  if(kindOf(c)==='king'){ p.hand.push(c); playKingsFromHand(p); log(`${p.name} drew a <b>King</b> — played at once.`); playEvent('kingDraw'); return c; }
-  if(G.promoted && kindOf(c)==='jack'){ p.hand.push(c); playPromotedFromHand(p); log(`${p.name} drew a <b>Jack</b> — promoted King, played at once.`); return c; }
+  if(kindOf(c)==='king'){ p.hand.push(c); playKingsFromHand(p); log(t('log.drewKing',{name:p.name})); playEvent('kingDraw'); return c; }
+  if(G.promoted && kindOf(c)==='jack'){ p.hand.push(c); playPromotedFromHand(p); log(t('log.drewJack',{name:p.name})); return c; }
   p.hand.push(c);
   return c;
 }
@@ -700,7 +726,7 @@ function checkFourKings(p){
     let winner=p;
     for(const q of G.players){ if(q!==p && countGenerals(q)>=4){ winner=q; break; } }
     playEvent(winner!==p ? 'generalsCoup' : 'fourKings');
-    endRound(`${p.name} raised a 4th King — a loss for society. <b>${winner.name}</b> claims +10.`, winner);
+    endRound(t('log.4thKing',{name:p.name, winner:winner.name}), winner);
   }
 }
 function countGenerals(p){return p.hand.filter(c=>kindOf(c)==='general').length;}
@@ -724,7 +750,7 @@ function maybePromote(){
   const anyStanding=G.players.some(p=>p.kings.some(k=>!k.promoted));
   if(!anyStanding && G.fallenCount>=G.totalKings){
     G.promoted=true;
-    log('<b>All Kings have fallen!</b> Jacks are now Promoted Kings — everyone plays their Jacks.');
+    log(t('log.allFallen'));
     playEvent('promotion');
     G.players.forEach(playPromotedFromHand);
   }
@@ -761,41 +787,41 @@ function evaluateCombo(cards, target){
   const tgtPromoted = tgt && tgt.k.promoted;
 
   // Two Bishops -> any king
-  if(n===2 && cnt('bishop')===2) return {ok:true,removeCount:1,scope:'one',requiresTarget:true,sfx:'topple',desc:'Two Bishops depose any crown.'};
+  if(n===2 && cnt('bishop')===2) return {ok:true,removeCount:1,scope:'one',requiresTarget:true,sfx:'topple',desc:t('desc.twoBishops')};
   // Bishop same suit
   if(n===1 && cnt('bishop')===1){
-    if(!tgt) return {ok:false,msg:'Pick a King to remove with the Bishop.'};
-    if(cards[0].suit===tgt.k.suit) return {ok:true,removeCount:1,scope:'one',requiresTarget:true,sfx:'excommunicate',desc:'The Bishop excommunicates a same-suit crown.'};
-    return {ok:false,msg:'A lone Bishop only removes a King of its own suit.'};
+    if(!tgt) return {ok:false,msg:t('msg.pickKingBishop')};
+    if(cards[0].suit===tgt.k.suit) return {ok:true,removeCount:1,scope:'one',requiresTarget:true,sfx:'excommunicate',desc:t('desc.bishopSame')};
+    return {ok:false,msg:t('msg.loneBishop')};
   }
   // PALACE COUP — any pair of high cards (Queen / Jack / General) topples ONE King.
   // The one exception: a SAME-SUIT Queen + General wipes ALL of one player's crowns.
   if(n===2 && kinds.every(k=>k==='queen'||k==='jack'||k==='general')){
     const q=cards.find(c=>kindOf(c)==='queen'), g=cards.find(c=>kindOf(c)==='general');
     if(q&&g&&q.suit===g.suit)
-      return {ok:true,removeCount:99,scope:'all',requiresTarget:true,sfx:'purge',desc:'A matched Queen & General topple ALL of a rival’s crowns.'};
-    let desc='A pair of high cards stages a palace coup.';
-    if(q&&g) desc='Queen & General topple a crown.';
-    else if(cnt('general')===2) desc='Two Generals stage a coup.';
-    else if(q&&has('jack')) desc='A Queen & Jack topple a crown.';
-    else if(cnt('jack')===2) desc='Two ambitious Jacks topple a crown.';
-    else if(cnt('queen')===2) desc='Two Queens conspire to topple a crown.';
-    else if(has('jack')&&has('general')) desc='A Jack & General topple a crown.';
+      return {ok:true,removeCount:99,scope:'all',requiresTarget:true,sfx:'purge',desc:t('desc.queenGeneralAll')};
+    let desc=t('desc.palace');
+    if(q&&g) desc=t('desc.queenGeneral');
+    else if(cnt('general')===2) desc=t('desc.twoGenerals');
+    else if(q&&has('jack')) desc=t('desc.queenJack');
+    else if(cnt('jack')===2) desc=t('desc.twoJacks');
+    else if(cnt('queen')===2) desc=t('desc.twoQueens');
+    else if(has('jack')&&has('general')) desc=t('desc.jackGeneral');
     return {ok:true,removeCount:1,scope:'one',requiresTarget:true,sfx:'topple',desc};
   }
   // Three of a kind — three number cards (2-9) of the SAME rank -> one king
   if(n===3 && cards.every(c=>kindOf(c)==='num') && new Set(cards.map(c=>R(c).val)).size===1){
-    return {ok:true,removeCount:1,scope:'one',requiresTarget:true,sfx:'riot',desc:`Three ${R(cards[0]).label}s rise up and topple a crown.`};
+    return {ok:true,removeCount:1,scope:'one',requiresTarget:true,sfx:'riot',desc:t('desc.riot',{label:R(cards[0]).label})};
   }
   // One General -> promoted king only
   if(n===1 && cnt('general')===1){
-    if(tgt && tgtPromoted) return {ok:true,removeCount:1,scope:'one',requiresTarget:true,promotedOnly:true,sfx:'topple',desc:'A General unseats a Promoted King.'};
-    return {ok:false,msg:'A single General only removes a Promoted King.'};
+    if(tgt && tgtPromoted) return {ok:true,removeCount:1,scope:'one',requiresTarget:true,promotedOnly:true,sfx:'topple',desc:t('desc.generalPromoted')};
+    return {ok:false,msg:t('msg.singleGeneral')};
   }
   // Joker + General -> promoted king (take the Jack)
   if(n===2 && has('joker') && cnt('general')===1){
-    if(tgt && tgtPromoted) return {ok:true,removeCount:1,scope:'one',requiresTarget:true,promotedOnly:true,takeJack:true,sfx:'jokerCoup',desc:'Joker & General fell a Promoted King; claim the Jack.'};
-    return {ok:false,msg:'Joker & General only remove a Promoted King.'};
+    if(tgt && tgtPromoted) return {ok:true,removeCount:1,scope:'one',requiresTarget:true,promotedOnly:true,takeJack:true,sfx:'jokerCoup',desc:t('desc.jokerCoup')};
+    return {ok:false,msg:t('msg.jokerGeneral')};
   }
   // Revolt: a run of consecutive same-suit NUMBER cards (2-9 only), length 4/5/6/7+ -> 1/2/3/3 kings.
   // An optional single Bishop may be added to lead it (does not change the count).
@@ -811,13 +837,13 @@ function evaluateCombo(cards, target){
         const uniq=new Set(rv).size===rv.length;
         if(consec&&uniq){
           const rc = Math.min(run.length-3, 3); // 4->1, 5->2, 6->3, 7+->3
-          return {ok:true,removeCount:rc,scope:'run',requiresTarget:true,sfx:'revolt',run:run.length,desc:`A revolt of ${run.length} topples ${rc} crown${rc>1?'s':''}.`};
+          return {ok:true,removeCount:rc,scope:'run',requiresTarget:true,sfx:'revolt',run:run.length,desc:t('desc.revolt',{n:run.length, rc})};
         }
       }
-      return {ok:false,msg:'A revolt must be a run of consecutive number cards (2-9) in one suit.'};
+      return {ok:false,msg:t('msg.revoltRun')};
     }
   }
-  return {ok:false,msg:'That combination doesn’t topple a King.'};
+  return {ok:false,msg:t('msg.noTopple')};
 }
 
 /* Apply a validated combo by player p */
@@ -848,13 +874,12 @@ function applyCombo(p, cards, target, ev){
   if(ev.takeJack){ /* the promoted king card IS the jack; already stored as promoted point */ }
   // spend the used cards to discard (remove from hand)
   cards.forEach(c=>{ p.hand=p.hand.filter(h=>h.id!==c.id); G.discard.push(c); });
-  log(`<b>${p.name}</b> ${ev.desc} (+${removed.length} crown${removed.length>1?'s':''})`);
+  log(t('log.applyCombo',{name:p.name, desc:ev.desc, n:removed.length}));
   if(ev.sfx) playEvent(ev.sfx,{run:ev.run});
   if(removed.length) playToppleVideo();
   if(tgt){
     const suits=removed.map(k=>(SUITS[k.suit]?SUITS[k.suit].sym:'♚')+(k.promoted?'*':'')).join(' ');
-    feedAdd(`<b>${p.name}</b> toppled ${removed.length} crown${removed.length>1?'s':''} <span style="font-size:14px">${suits}</span>`+
-            `<br><span class="who">from ${tgt.owner.name} — ${ev.desc}</span>`);
+    feedAdd(t('feed.toppled',{name:p.name, n:removed.length, suits, owner:tgt.owner.name, desc:ev.desc}));
   }
   maybePromote();
   return true;
@@ -873,7 +898,7 @@ function setDiscardMode(on){
   const dock=document.getElementById('dock'), b=document.getElementById('discardBanner');
   if(dock) dock.classList.toggle('discard',on);
   if(b){ b.classList.toggle('on',on);
-    if(on) b.innerHTML='⚠ You’re holding 8 — over the limit of 7. The <u>next card you tap will be DISCARDED</u>. (Jacks can’t be discarded.)'; }
+    if(on) b.innerHTML=t('discard.banner'); }
 }
 function humanDraw(){
   if(!isHumanTurn()||drewThisTurn)return;
@@ -881,18 +906,18 @@ function humanDraw(){
   drewThisTurn=true;
   if(c){
     const k=kindOf(c);
-    if(k!=='king' && !(G.promoted&&k==='jack')) log(`You drew ${cardName(c)}.`);
+    if(k!=='king' && !(G.promoted&&k==='jack')) log(t('log.youDrew',{card:cardName(c)}));
   }
   if(p.hand.length>HAND_LIMIT){
-    updateHint('Over the 7-card limit — tap a card to discard it.');
+    updateHint(t('hint.overlimit'));
     setDiscardMode(true);
-    toast('⚠ Over the 7-card limit!<br>The <u>next card you tap will be discarded</u>. Jacks are safe — pick carefully.');
+    toast(t('toast.overlimit'));
     refreshActions('discard');
   }
   else {
     setDiscardMode(false);
     noMovesLeft = !hasAnyTopple(p);
-    updateHint(noMovesLeft ? 'No plays available — end your turn.' : 'Play a topple combo, or end your turn.');
+    updateHint(noMovesLeft ? t('hint.noplays') : t('hint.playOrEnd'));
     refreshActions('play');
   }
   render();
@@ -908,10 +933,10 @@ function toggleSel(id){
 }
 function previewCombo(){
   const p=cur(); const cards=p.hand.filter(c=>sel.includes(c.id));
-  if(!cards.length){updateHint('Select cards to form a topple combo.');return;}
+  if(!cards.length){updateHint(t('hint.selectCards'));return;}
   const ev=evaluateCombo(cards, targetKingId);
   if(ev.ok){
-    updateHint('✓ '+ev.desc+(ev.requiresTarget&&!targetKingId?' — now tap a King on the table.':'  Tap “Topple”.'));
+    updateHint('✓ '+ev.desc+(ev.requiresTarget&&!targetKingId? t('hint.okTarget') : t('hint.okGo')));
   } else updateHint('… '+ nearMissHint(cards, ev));
 }
 /* Guide the player when they're one card short of a Riot or Revolt (a common cause
@@ -921,7 +946,7 @@ function nearMissHint(cards, ev){
   // partial Riot: two number cards of the same rank -> need one more
   const byRank={}; nums.forEach(c=>{ (byRank[c.rank]=byRank[c.rank]||[]).push(c); });
   for(const rk in byRank){ if(byRank[rk].length===2)
-    return `Two ${rk}s selected — tap <b>one more ${rk}</b> (scroll your hand if needed) for a <b>Riot</b>.`; }
+    return t('near.riot',{rk}); }
   // partial Revolt: a same-suit consecutive run of 2–3 -> need 4+
   if(nums.length>=2 && nums.length<=3){
     const bySuit={}; nums.forEach(c=>{ (bySuit[c.suit]=bySuit[c.suit]||[]).push(c); });
@@ -929,11 +954,11 @@ function nearMissHint(cards, ev){
       if(g.length===nums.length){
         const rv=g.map(c=>R(c).run).sort((a,b)=>a-b); let consec=true;
         for(let i=1;i<rv.length;i++) if(rv[i]!==rv[i-1]+1){ consec=false; break; }
-        if(consec) return `A same-suit run of ${g.length} — a <b>Revolt</b> needs <b>4 or more</b> in a row.`;
+        if(consec) return t('near.revolt',{n:g.length});
       }
     }
   }
-  return ev.msg||'Not a valid combo yet.';
+  return ev.msg||t('near.notyet');
 }
 function pickTarget(id){
   if(!isHumanTurn())return;
@@ -943,20 +968,20 @@ function pickTarget(id){
 function humanTopple(){
   const p=cur(); const cards=p.hand.filter(c=>sel.includes(c.id));
   const ev=evaluateCombo(cards, targetKingId);
-  if(!ev.ok){ updateHint('✗ '+(ev.msg||'Invalid combo.')); return; }
-  if(ev.requiresTarget && !targetKingId){ updateHint('Tap a King on the table to target.'); return; }
+  if(!ev.ok){ updateHint('✗ '+(ev.msg||t('msg.invalid'))); return; }
+  if(ev.requiresTarget && !targetKingId){ updateHint(t('hint.tapKing')); return; }
   applyCombo(p,cards,targetKingId,ev);
   sel=[]; targetKingId=null;
   render();
   if(G.over)return;
   noMovesLeft = !hasAnyTopple(p);
-  updateHint(noMovesLeft ? 'No more plays — end your turn.' : 'Nice. Play another combo or end your turn.');
+  updateHint(noMovesLeft ? t('hint.noMoreEnd') : t('hint.niceAgain'));
   refreshActions('play');
 }
 function clearSel(){sel=[];targetKingId=null;render();previewCombo();}
 function humanEndTurn(){
   const p=cur();
-  if(p.hand.length>HAND_LIMIT){ updateHint('Discard down to 7 first.'); return; }
+  if(p.hand.length>HAND_LIMIT){ updateHint(t('hint.discardFirst')); return; }
   drewThisTurn=false;
   nextTurn();
 }
@@ -972,13 +997,13 @@ function handCardClick(id){
   const p=cur();
   if(p.hand.length>HAND_LIMIT){
     const c=p.hand.find(x=>x.id===id);
-    if(kindOf(c)==='jack'){ updateHint('Jacks can’t be discarded — they may rise as Promoted Kings. Discard something else.'); return; }
+    if(kindOf(c)==='jack'){ updateHint(t('hint.jackNoDiscard')); return; }
     p.hand=p.hand.filter(x=>x.id!==id); G.discard.push(c);
-    log(`You discarded ${cardName(c)} (over limit).`);
+    log(t('log.youDiscard',{card:cardName(c)}));
     if(p.hand.length<=HAND_LIMIT){
       setDiscardMode(false);
       noMovesLeft = !hasAnyTopple(p);
-      updateHint(noMovesLeft ? 'No plays available — end your turn.' : 'Good. Play a combo or end your turn.');
+      updateHint(noMovesLeft ? t('hint.noplays') : t('hint.goodCombo'));
       refreshActions('play');
     }
     render(); return;
@@ -1036,27 +1061,27 @@ function doAI(p,cards,targetId){
 /* ============================ ROUND / SCORING ============================ */
 function endRound(reason, coupWinner){
   if(G.over)return;
-  log(`<b>Round over.</b> ${reason}`);
+  log(t('log.roundOver',{reason}));
   // scoring
   const rows=[];
   G.players.forEach(p=>{
     let s=0; const parts=[];
     const fallen=p.points.filter(x=>x.type==='fallen').length;
     const promo=p.points.filter(x=>x.type==='promoted').length;
-    if(fallen){s+=2*fallen;parts.push(`${fallen}×Fallen +${2*fallen}`);}
-    if(promo){s+=1*promo;parts.push(`${promo}×Promoted +${1*promo}`);}
+    if(fallen){s+=2*fallen;parts.push(t('part.fallen',{n:fallen, p:2*fallen}));}
+    if(promo){s+=1*promo;parts.push(t('part.promoted',{n:promo, p:1*promo}));}
     const queens=p.hand.filter(c=>kindOf(c)==='queen').length;
-    if(queens){s+=1*queens;parts.push(`${queens}×Queen +${1*queens}`);}
+    if(queens){s+=1*queens;parts.push(t('part.queen',{n:queens, p:1*queens}));}
     p._heldKing = p.hand.some(c=>kindOf(c)==='king');
     p._round=s; p._parts=parts;
   });
   // standing kings: -1 to ALL players per standing crown
   const standing=standingKings().length;
-  if(standing){ G.players.forEach(p=>{p._round-=standing;p._parts.push(`Standing crowns −${standing}`);}); }
+  if(standing){ G.players.forEach(p=>{p._round-=standing;p._parts.push(t('part.standing',{n:standing}));}); }
   // four-kings / coup +10
-  if(coupWinner){ coupWinner._round+=10; coupWinner._parts.push('Seized the realm +10'); }
+  if(coupWinner){ coupWinner._round+=10; coupWinner._parts.push(t('part.coup')); }
   // caught holding a King at scoring → forfeit the entire round score to 0
-  G.players.forEach(p=>{ if(p._heldKing){ p._round=0; p._parts=['Caught holding a King — round forfeit (0)']; } });
+  G.players.forEach(p=>{ if(p._heldKing){ p._round=0; p._parts=[t('part.caught')]; } });
   G.players.forEach(p=>{p.score+=p._round;});
   if(G.players.some(p=>p._heldKing)) playEvent('caughtKing');
   else if(!coupWinner) playEvent('deckEnd');   // deck-depleted round end (four-kings cue already fired)
@@ -1070,11 +1095,11 @@ function showScoreModal(reason){
   let rows=G.players.map(p=>`<tr><td>${p.name}</td><td class="mini">${p._parts.join(', ')||'—'}</td>
      <td class="n">${p._round>=0?'+':''}${p._round}</td><td class="n"><b>${p.score}</b></td></tr>`).join('');
   box.innerHTML=`<div class="box">
-    <h2>${gameOver?'🏴 Game Over':'Round '+G.round+' — Scores'}</h2>
+    <h2>${gameOver? t('modal.gameover') : t('modal.scores',{n:G.round})}</h2>
     <div class="mini">${reason}</div>
-    <table class="scoretable"><tr><th>Player</th><th>Round breakdown</th><th class="n">Round</th><th class="n">Total</th></tr>${rows}</table>
-    ${gameOver?`<h3 style="color:var(--gold)">${winner.name} win${winner.name==='You'?'':'s'} with ${winner.score}!</h3>`:''}
-    <button class="btn-primary" id="nextBtn">${gameOver?'Play again':'Next round'}</button>
+    <table class="scoretable"><tr><th>${t('modal.th.player')}</th><th>${t('modal.th.breakdown')}</th><th class="n">${t('modal.th.round')}</th><th class="n">${t('modal.th.total')}</th></tr>${rows}</table>
+    ${gameOver?`<h3 style="color:var(--gold)">${t('modal.winner',{name:winner.name, you:winner.you, score:winner.score})}</h3>`:''}
+    <button class="btn-primary" id="nextBtn">${gameOver? t('modal.playagain') : t('modal.nextround')}</button>
   </div>`;
   document.body.appendChild(box);
   document.getElementById('nextBtn').onclick=()=>{ box.remove(); gameOver?location.reload():nextRound(); };
@@ -1084,7 +1109,7 @@ function nextRound(){
   G.round++; G.deck=buildDeck(G.players.length); G.discard=[]; G.promoted=false; G.fallenCount=0; G.over=false;
   G.players.forEach(p=>{p.hand=[];p.kings=[];p.points=[];});
   G.turn=(G.round-1)%G.players.length;
-  log(`<b>Round ${G.round}</b> begins.`);
+  log(t('log.roundBegins',{n:G.round}));
   render(); beginTurn();
 }
 
@@ -1129,20 +1154,20 @@ function cardEl(c,{mini=false,sel=false,onClick=null,back=false}={}){
   if(onClick) d.onclick=()=>onClick(c.id);
   return d;
 }
-function cardName(c){ if(c.joker)return 'a Joker'; const r=R(c),su=SUITS[c.suit];
-  return `the ${r.name} of ${su.name}`.replace('Two of','2 of').replace('Three of','3 of'); }
+function cardName(c){ if(c.joker) return t('card.joker'); const r=R(c);
+  return t('card.name',{ role:t('role.'+r.k), suit:t('suit.'+c.suit) }); }
 
 function render(){
   if(!G)return;
-  document.getElementById('deckCount').textContent='Deck '+G.deck.length;
-  document.getElementById('phasePill').textContent=(G.promoted?'⚔ Promotion':'Kings reign');
+  document.getElementById('deckCount').textContent=t('game.deck',{n:G.deck.length});
+  document.getElementById('phasePill').textContent=(G.promoted? t('phase.promotion') : t('phase.reign'));
   // opponents
   const opp=document.getElementById('opponents'); opp.innerHTML='';
   G.players.forEach((p,i)=>{
     const d=document.createElement('div'); d.className='opp'+(i===G.turn?' turn':'');
     const standing=p.kings.length;
     d.innerHTML=`<div class="name"><span>${p.name}${p.human?' 👑':''}</span><span class="score">${p.score}</span></div>
-      <div class="meta">${p===cur()?'● their turn':'&nbsp;'} · hand ${p.human?p.hand.length:'🂠'.repeat(Math.min(p.hand.length,7))||0} · crowns ${standing} · won ${p.points.length}</div>
+      <div class="meta">${p===cur()? t('meta.theirturn') :'&nbsp;'} · ${t('meta.hand')} ${p.human?p.hand.length:'🂠'.repeat(Math.min(p.hand.length,7))||0} · ${t('meta.crowns')} ${standing} · ${t('meta.won')} ${p.points.length}</div>
       <div class="kingrow" id="kr${i}"></div>`;
     opp.appendChild(d);
     p.kings.forEach(k=>{ const ke=cardEl(k,{mini:true}); if(k.promoted)ke.classList.add('promoted'); d.querySelector('#kr'+i).appendChild(ke); });
@@ -1150,7 +1175,7 @@ function render(){
   // table standing kings (targetable)
   const tk=document.getElementById('tableKings'); tk.innerHTML='';
   const kings=standingKings();
-  document.getElementById('tableHint').textContent = kings.length?'(tap a King to target it)':'— none standing —';
+  document.getElementById('tableHint').textContent = kings.length? t('table.tap') : t('table.none');
   kings.forEach(({k,owner})=>{
     const chip=document.createElement('div'); chip.className='king-chip'+(targetKingId===k.id?' target':'');
     const ke=cardEl(k,{}); ke.style.width='58px';ke.style.height='82px'; if(k.promoted)ke.classList.add('promoted');
@@ -1162,7 +1187,7 @@ function render(){
   // hand
   const p=cur();
   const showHand = p.human;
-  document.getElementById('youName').textContent = showHand? (p.name+ (cfg.mode==='hotseat'?' — your turn':'')) : `${cur().name} is thinking…`;
+  document.getElementById('youName').textContent = showHand? (cfg.mode==='hotseat'? t('you.yourturn',{name:p.name}) : p.name) : t('you.thinking',{name:cur().name});
   document.getElementById('handCount').textContent = showHand? `${p.hand.length} / ${HAND_LIMIT}` : '';
   const hand=document.getElementById('hand'); hand.innerHTML='';
   if(showHand){
