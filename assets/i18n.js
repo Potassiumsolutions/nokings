@@ -8,7 +8,7 @@
 (function(){
 'use strict';
 
-const S = { en:{}, es:{} };
+const S = { en:{}, es:{}, fr:{} };
 
 /* ---------- SETUP ---------- */
 S.en['setup.tag']="Topple every crown. Get caught holding a King and forfeit the round. First to 50 points wins — or 20 for a Short Game.";
@@ -151,7 +151,7 @@ S.en['modal.th.breakdown']="Round breakdown";     S.es['modal.th.breakdown']="De
 S.en['modal.th.round']="Round";                   S.es['modal.th.round']="Ronda";
 S.en['modal.th.total']="Total";                   S.es['modal.th.total']="Total";
 S.en['modal.winner']=v=>`${v.name} win${v.you?'':'s'} with ${v.score}!`;
-S.es['modal.winner']=v=>`¡${v.name} gana con ${v.score}!`;
+S.es['modal.winner']=v=>`¡${v.name} gana${v.you?'s':''} con ${v.score}!`;
 S.en['modal.playagain']="Play again";             S.es['modal.playagain']="Jugar de nuevo";
 S.en['modal.nextround']="Next round";             S.es['modal.nextround']="Siguiente ronda";
 
@@ -277,10 +277,231 @@ S.es['rules.body']=`
     <p>Una ronda termina cuando <b>o bien</b> un jugador tiene <b>4 Reyes en pie</b> (una dinastía tiránica queda asegurada — <i>una derrota para la sociedad, una victoria para el individuo</i>), <b>o bien</b> el <b>mazo se recorre una vez por completo</b>. Se suman los puntos, se rebaraja, siguiente ronda. <b>El primero en llegar a 50 gana</b> — o <b>20</b> en una Partida Corta (elige la duración en Ajustes). Los umbrales de "cuatro" siguen siendo cuatro incluso en partidas de 5–6 jugadores.</p>`;
 
 /* ============================================================
+   FRENCH / FRANÇAIS
+   ============================================================ */
+/* setup */
+S.fr['setup.tag']="Renversez chaque couronne. Si l’on vous surprend avec un Roi en main, vous perdez la manche. Le premier à 50 points gagne — ou 20 pour une Partie Courte.";
+S.fr['setup.players']="Joueurs";
+S.fr['setup.note4']="4 couleurs (52 cartes + jokers).";
+S.fr['setup.note5']="Ajoute la couleur des Enclumes (vert).";
+S.fr['setup.note6']="Ajoute les couleurs Enclumes + Blé (vert + bleu).";
+S.fr['setup.youvs']="Vous contre";
+S.fr['mode.ai']="Ordinateur";
+S.fr['mode.hotseat']="Chacun son tour";
+S.fr['setup.start']="COMMENCER";
+S.fr['setup.settings']="⚙ Réglages et Crédits";
+S.fr['setup.about']="ⓘ À propos et Obtenir le jeu";
+S.fr['foot.created']='<b><span style="color:var(--red)">NO</span> KINGS</b> &middot; Créé par Paul A.T. Ramey<br><a href="https://www.ksoldesigns.com" target="_blank" rel="noopener">www.ksoldesigns.com</a> &middot; Potassium Solutions';
+/* common */
+S.fr['ui.back']="‹ Retour";
+S.fr['ui.rules']="📖 Règles";
+S.fr['ui.printpdf']="🖨️ Imprimer / PDF";
+/* settings */
+S.fr['set.gamelen']="Durée de la partie";
+S.fr['len.standard']="Standard · 50";
+S.fr['len.short']="Courte · 20";
+S.fr['set.music']="Musique de fond";
+S.fr['set.track']="Piste musicale";
+S.fr['set.volume']="Volume";
+S.fr['set.sfx']="Effets sonores et voix";
+S.fr['set.vid']="Vidéo du Roi déchu";
+S.fr['set.language']="Langue";
+S.fr['toggle.on']="Oui";
+S.fr['toggle.off']="Non";
+S.fr['credits.h']="Crédits";
+S.fr['credits.design']='Conception et illustrations &mdash; <b>Paul A.T. Ramey</b>';
+S.fr['credits.music']='Musique &mdash; &laquo;No Kings Table&raquo; et &laquo;Topple the Crown&raquo;';
+/* about */
+S.fr['about.lead']="Vous aimez le jeu ? Emportez-le à table. Commandez un jeu de cartes physique magnifiquement illustré — ou les règles imprimées — sur The Game Crafter.";
+S.fr['about.std.sub']="4 couleurs · 2–4 joueurs · 54 cartes";
+S.fr['about.full.sub']="6 couleurs · 2–6 joueurs · 84 cartes";
+S.fr['about.rules.sub']="Les règles imprimées dépliantes";
+/* game ui */
+S.fr['game.deck']="Pioche {n}";
+S.fr['phase.promotion']="⚔ Promotion";
+S.fr['phase.reign']="Les Rois règnent";
+S.fr['phase.turn']="Tour de {name}";
+S.fr['game.settings']="⚙ Réglages";
+S.fr['game.menu']="Menu";
+S.fr['game.quit']="Quitter vers le menu ?";
+S.fr['table.h3']="Rois debout sur la table";
+S.fr['table.tap']="(touchez un Roi pour le viser)";
+S.fr['table.none']="— aucun debout —";
+S.fr['guide.title']="Renverser un Roi";
+S.fr['guide.r1']='<b>Coup de palais</b> · 2 cartes hautes<span>paire Dame/Valet/Général → 1 couronne</span>';
+S.fr['guide.r2']='<b>Lignée royale</b> · Dame + Général de même couleur<span>TOUTES les couronnes d’un rival</span>';
+S.fr['guide.r3']='<b>Décret sacré</b> · 1 Évêque de même couleur<span>1 couronne de même couleur</span>';
+S.fr['guide.r4']='<b>Deux Évêques</b><span>n’importe quelle couronne</span>';
+S.fr['guide.r5']='<b>Émeute</b> · brelan (2–9)<span>1 couronne</span>';
+S.fr['guide.r6']='<b>Révolte</b> · suite de même couleur de 4 / 5 / 6+<span>→ 1 / 2 / 3 couronnes</span>';
+S.fr['guide.r7']='<b>Rois promus</b><span>1 Général, ou Joker + Général (après la chute de tous les Rois)</span>';
+S.fr['dock.you']="Vous";
+S.fr['act.draw']="Piocher";
+S.fr['act.topple']="Renverser";
+S.fr['act.clear']="Effacer";
+S.fr['act.end']="Fin";
+S.fr['act.guide']="Guide";
+S.fr['dock.playlog']="Journal";
+S.fr['discard.banner']='⚠ Vous avez 8 cartes — au-dessus de la limite de 7. La <u>prochaine carte touchée sera DÉFAUSSÉE</u>. (Les Valets ne peuvent pas être défaussés.)';
+/* players / meta */
+S.fr['player.you']="Vous";
+S.fr['player.rival']="Rival {n}";
+S.fr['meta.theirturn']="● son tour";
+S.fr['meta.hand']="main";
+S.fr['meta.crowns']="couronnes";
+S.fr['meta.won']="gagnées";
+S.fr['you.yourturn']="{name} — à vous";
+S.fr['you.thinking']="{name} réfléchit…";
+/* hints */
+S.fr['hint.drawBegin']="Piochez une carte pour commencer votre tour.";
+S.fr['hint.overlimit']="Au-dessus de la limite de 7 cartes — touchez une carte pour la défausser.";
+S.fr['hint.noplays']="Aucun coup possible — terminez votre tour.";
+S.fr['hint.playOrEnd']="Jouez une combinaison pour renverser, ou terminez votre tour.";
+S.fr['hint.selectCards']="Sélectionnez des cartes pour former une combinaison.";
+S.fr['hint.okTarget']=" — touchez maintenant un Roi sur la table.";
+S.fr['hint.okGo']="  Touchez « Renverser ».";
+S.fr['hint.noMoreEnd']="Plus de coups — terminez votre tour.";
+S.fr['hint.niceAgain']="Bien joué ! Jouez une autre combinaison ou terminez votre tour.";
+S.fr['hint.tapKing']="Touchez un Roi sur la table pour le viser.";
+S.fr['hint.discardFirst']="Défaussez d’abord jusqu’à 7 cartes.";
+S.fr['hint.goodCombo']="Bien. Jouez une combinaison ou terminez votre tour.";
+S.fr['hint.jackNoDiscard']="Les Valets ne peuvent pas être défaussés — ils peuvent devenir des Rois promus. Défaussez autre chose.";
+/* toasts */
+S.fr['toast.overlimit']='⚠ Au-dessus de la limite de 7 cartes !<br>La <u>prochaine carte touchée sera défaussée</u>. Les Valets sont à l’abri — choisissez bien.';
+/* log */
+S.fr['log.drewKing']="{name} a pioché un <b>Roi</b> — joué aussitôt.";
+S.fr['log.drewJack']="{name} a pioché un <b>Valet</b> — Roi promu, joué aussitôt.";
+S.fr['log.youDrew']="Vous avez pioché {card}.";
+S.fr['log.youDiscard']="Vous avez défaussé {card} (au-dessus de la limite).";
+S.fr['log.round']="<b>Manche {n}</b> — {players} joueurs, {suits} couleurs. Le joueur le plus âgé commence.";
+S.fr['log.roundBegins']="La <b>Manche {n}</b> commence.";
+S.fr['log.allFallen']="<b>Tous les Rois sont tombés !</b> Les Valets deviennent des Rois promus — chacun joue ses Valets.";
+S.fr['log.roundOver']="<b>Manche terminée.</b> {reason}";
+S.fr['log.4thKing']="{name} a dressé un 4e Roi — une défaite pour la société. <b>{winner}</b> remporte +10.";
+S.fr['log.applyCombo']=v=>`<b>${v.name}</b> ${v.desc} (+${v.n} couronne${v.n>1?'s':''})`;
+/* round end / scoring */
+S.fr['reason.deck']="La pioche est épuisée.";
+S.fr['part.fallen']=v=>`${v.n}×Déchu +${v.p}`;
+S.fr['part.promoted']=v=>`${v.n}×Promu +${v.p}`;
+S.fr['part.queen']=v=>`${v.n}×Dame +${v.p}`;
+S.fr['part.standing']="Couronnes debout −{n}";
+S.fr['part.coup']="S’est emparé du royaume +10";
+S.fr['part.caught']="Surpris avec un Roi — manche perdue (0)";
+/* score modal */
+S.fr['modal.gameover']="🏴 Partie terminée";
+S.fr['modal.scores']="Manche {n} — Scores";
+S.fr['modal.th.player']="Joueur";
+S.fr['modal.th.breakdown']="Détail de la manche";
+S.fr['modal.th.round']="Manche";
+S.fr['modal.th.total']="Total";
+S.fr['modal.winner']=v=>v.you?`Vous gagnez avec ${v.score} !`:`${v.name} gagne avec ${v.score} !`;
+S.fr['modal.playagain']="Rejouer";
+S.fr['modal.nextround']="Manche suivante";
+/* combo descriptions */
+S.fr['desc.twoBishops']="Deux Évêques déposent n’importe quelle couronne.";
+S.fr['desc.bishopSame']="L’Évêque excommunie une couronne de même couleur.";
+S.fr['desc.queenGeneralAll']="Une Dame et un Général de même couleur renversent TOUTES les couronnes d’un rival.";
+S.fr['desc.palace']="Une paire de cartes hautes orchestre un coup de palais.";
+S.fr['desc.queenGeneral']="Dame et Général renversent une couronne.";
+S.fr['desc.twoGenerals']="Deux Généraux orchestrent un coup.";
+S.fr['desc.queenJack']="Une Dame et un Valet renversent une couronne.";
+S.fr['desc.twoJacks']="Deux Valets ambitieux renversent une couronne.";
+S.fr['desc.twoQueens']="Deux Dames conspirent pour renverser une couronne.";
+S.fr['desc.jackGeneral']="Un Valet et un Général renversent une couronne.";
+S.fr['desc.riot']="Trois {label} se soulèvent et renversent une couronne.";
+S.fr['desc.generalPromoted']="Un Général détrône un Roi promu.";
+S.fr['desc.jokerCoup']="Joker et Général renversent un Roi promu ; récupérez le Valet.";
+S.fr['desc.revolt']=v=>`Une révolte de ${v.n} renverse ${v.rc} couronne${v.rc>1?'s':''}.`;
+/* combo error messages */
+S.fr['msg.pickKingBishop']="Choisissez un Roi à éliminer avec l’Évêque.";
+S.fr['msg.loneBishop']="Un Évêque seul n’élimine qu’un Roi de sa propre couleur.";
+S.fr['msg.singleGeneral']="Un seul Général n’élimine qu’un Roi promu.";
+S.fr['msg.jokerGeneral']="Joker et Général n’éliminent qu’un Roi promu.";
+S.fr['msg.revoltRun']="Une révolte doit être une suite de cartes numériques consécutives (2-9) de même couleur.";
+S.fr['msg.noTopple']="Cette combinaison ne renverse aucun Roi.";
+S.fr['msg.invalid']="Combinaison invalide.";
+/* near-miss hints */
+S.fr['near.riot']="Deux {rk} sélectionnés — touchez <b>un {rk} de plus</b> (faites défiler votre main si besoin) pour une <b>Émeute</b>.";
+S.fr['near.revolt']="Une suite de même couleur de {n} — une <b>Révolte</b> nécessite <b>4 cartes ou plus</b> à la suite.";
+S.fr['near.notyet']="Pas encore une combinaison valide.";
+/* feed */
+S.fr['feed.empty']="Aucune couronne n’est encore tombée.";
+S.fr['feed.toppled']=v=>`<b>${v.name}</b> a renversé ${v.n} couronne${v.n>1?'s':''} <span style="font-size:14px">${v.suits}</span><br><span class="who">de ${v.owner} — ${v.desc}</span>`;
+/* card names */
+S.fr['suit.hearts']="Cœur";   S.fr['suit.diamonds']="Carreau";
+S.fr['suit.clubs']="Trèfle";  S.fr['suit.spades']="Pique";
+S.fr['suit.anvils']="Enclumes"; S.fr['suit.wheat']="Blé";
+S.fr['role.A']="l’Évêque"; S.fr['role.J']="le Valet"; S.fr['role.Q']="la Dame";
+S.fr['role.10']="le Général"; S.fr['role.K']="le Roi";
+S.fr['role.2']="le 2"; S.fr['role.3']="le 3"; S.fr['role.4']="le 4"; S.fr['role.5']="le 5";
+S.fr['role.6']="le 6"; S.fr['role.7']="le 7"; S.fr['role.8']="le 8"; S.fr['role.9']="le 9";
+S.fr['card.joker']="un Joker";
+S.fr['card.name']=v=>{ const de = /^[aeiouhàâéèêëîïôûAEIOUHÀÂÉÈÊËÎÏÔÛ]/.test(v.suit) ? "d’" : "de "; return `${v.role} ${de}${v.suit}`; };
+/* rules body (French) */
+S.fr['rules.body']=`
+    <p class="rules-lead">Le royaume de Cardlandia se fissure. Renversez l’ancien régime et réclamez la gloire, mais si la tyrannie s’assure un bastion avant que la révolution ne triomphe, la couronne l’emporte. Le premier à <b class="hi">50 points</b> fonde le nouvel ordre — ou choisissez une <b class="hi">Partie Courte (20 points)</b> dans les Réglages pour un soulèvement plus rapide.</p>
+
+    <h2>Les Personnages et le Jeu</h2>
+    <p>Un jeu standard de 52 cartes dont la cour est renommée, plus 4 Jokers sauvages.</p>
+    <table>
+      <tr><th>Carte</th><th>Qui sont-ils</th></tr>
+      <tr><td><b>Rois</b> (K)</td><td>Monarques absolus. Les tyrans ne se cachent jamais : dès que vous piochez un Roi, vous <b>devez</b> le jouer face visible devant vous.</td></tr>
+      <tr><td><b>Dames</b> (Q)</td><td>Comploteuses rusées, intriguant depuis l’ombre de votre main.</td></tr>
+      <tr><td><b>Généraux</b> (10)</td><td>L’état-major militaire, fidèle au commandement, au coup d’État ou au chaos.</td></tr>
+      <tr><td><b>Évêques</b> (A)</td><td>L’Ordre sacré, brandissant la sanction contre la Couronne.</td></tr>
+      <tr><td><b>La Foule</b> (2–9)</td><td>Le petit peuple. Faible isolé, dévastateur uni.</td></tr>
+      <tr><td><b>Valets</b> (J)</td><td>Héritiers ambitieux qui attendent en coulisses. Les Valets <b>ne peuvent jamais être défaussés</b>.</td></tr>
+    </table>
+    <p><b>Joueurs — 4 par défaut</b> (Cœur, Carreau, Trèfle, Pique). Pour <b>5–6 joueurs</b>, les corporations ouvrières se joignent avec une couleur complète chacune : la 5e est les <b style="color:#4caf50">Enclumes</b> (vert), la 6e est le <b style="color:#5b9bd5">Blé</b> (bleu).</p>
+
+    <h2>Le Cycle Révolutionnaire</h2>
+    <ol>
+      <li>Le <b>joueur le plus âgé</b> joue en premier ; le jeu se déroule <b>dans le sens des aiguilles d’une montre</b>.</li>
+      <li><b>Recrutez du soutien</b> — piochez une carte. Si vous piochez un <b>Roi</b>, vous vous couronnez aussitôt, face visible sur la table.</li>
+      <li><b>Maintenez l’ordre</b> — la limite de main est de <b>7</b>. Défaussez l’excédent hors jeu, mais les ambitieux <b>Valets refusent d’être défaussés</b>.</li>
+      <li><b>Attaquez ou complotez</b> — lancez une attaque pour renverser les Rois debout, ou gardez vos cartes pour un coup plus grand.</li>
+    </ol>
+
+    <h2>Trois Voies Révolutionnaires</h2>
+    <p>Chaque renversement est l’une de trois idées simples. Un Roi renversé devient un <b>Roi déchu</b> dans votre pile de victoire ; les cartes utilisées sont défaussées.</p>
+    <table>
+      <tr><th>Voie</th><th>Le coup</th><th>Effet</th></tr>
+      <tr><td><b>Coup de palais</b><br><span class="hi">figures et 10</span></td><td><b>N’importe quelle paire de cartes hautes</b> — deux parmi Dame / Valet / Général (p. ex. Dame+Général, Dame+Valet, deux Généraux)</td><td>renverse <b>1</b> Roi</td></tr>
+      <tr><td></td><td><b>Lignée royale</b> — Dame + Général de <b>même couleur</b></td><td>renverse <b>TOUS</b> les Rois d’un joueur</td></tr>
+      <tr><td><b>Décret sacré</b><br><span class="hi">Évêques / As</span></td><td><b>1 Évêque</b> de la couleur du Roi — <i>ou</i> — <b>2 Évêques</b> de n’importe quelle couleur</td><td>renverse <b>1</b> Roi</td></tr>
+      <tr><td><b>La Foule</b><br><span class="hi">nombres 2–9</span></td><td><b>Émeute</b> — un brelan (trois cartes 2–9 de même valeur)</td><td>renverse <b>1</b> Roi</td></tr>
+      <tr><td></td><td><b>Révolte</b> — une suite de même couleur de 2–9, de <b>4 / 5 / 6+</b></td><td>renverse <b>1 / 2 / 3</b> Rois</td></tr>
+    </table>
+    <p>La <b>Révolte</b> est une suite de <b>cartes numériques consécutives 2–9 de même couleur</b> — sans figure à l’intérieur de la suite — toutes dirigées vers les Rois d’<b>un seul joueur</b>. Un Évêque peut mener la marche pour l’ambiance, mais ne compte pas.</p>
+
+    <h2>La Deuxième Vague <span style="font-weight:400;text-transform:none;color:var(--muted);font-size:12px">(l’ambition du Valet)</span></h2>
+    <ul>
+      <li>Quand <b>tous les vrais Rois</b> sont tombés, les ambitieux <b>Valets se dressent aussitôt en Rois promus</b> — chacun révèle ses Valets en même temps.</li>
+      <li>Un seul <b>Général</b> peut écraser un Roi promu (défaussé).</li>
+      <li><b>Joker + Général</b> est un assassinat éclair : éliminez un Roi promu et réclamez le Valet comme <b>Roi déchu promu</b>.</li>
+      <li>Les Évêques, les paires et les Révoltes renversent les Rois promus selon leurs règles normales.</li>
+    </ul>
+
+    <h2>Le Grand Décompte <span style="font-weight:400;text-transform:none;color:var(--muted);font-size:12px">(score)</span></h2>
+    <table>
+      <tr><th>Exploit / pénalité</th><th style="text-align:right">Points</th></tr>
+      <tr><td>Roi déchu dans votre pile de victoire</td><td class="pts">+2</td></tr>
+      <tr><td>Roi déchu promu (un monarque mineur)</td><td class="pts">+1</td></tr>
+      <tr><td>Dame survivante en main</td><td class="pts">+1</td></tr>
+      <tr><td>4 Rois debout devant vous (ou un coup)</td><td class="pts">+10</td></tr>
+      <tr><td>Chaque Roi / Roi promu debout sur la table</td><td class="pts">−1 à tous</td></tr>
+      <tr><td>Surpris avec un Roi au décompte</td><td class="pts">manche = 0</td></tr>
+    </table>
+    <p><b>Coup des Généraux :</b> détenez <b>les 4 Généraux</b> lorsque le <b>4e Roi</b> est joué et vous pouvez réclamer les <b>+10</b> à la place de celui qui a dressé les Rois.</p>
+
+    <h2>La Fin d’une Manche</h2>
+    <p>Une manche se termine lorsque <b>soit</b> un joueur a <b>4 Rois debout</b> (une dynastie tyrannique est assurée — <i>une défaite pour la société, une victoire pour l’individu</i>), <b>soit</b> la <b>pioche a été parcourue une fois entièrement</b>. On additionne les points, on rebat les cartes, manche suivante. <b>Le premier à 50 gagne</b> — ou <b>20</b> dans une Partie Courte (choisissez la durée dans les Réglages). Les seuils de « quatre » restent à quatre même dans les parties à 5–6 joueurs.</p>`;
+
+/* ============================================================
    runtime
    ============================================================ */
 window.STR = S;
-window.LANG = (localStorage.getItem('nokings.lang')==='es') ? 'es' : 'en';
+window.LANG = (function(){ const s=localStorage.getItem('nokings.lang'); return (s && S[s]) ? s : 'en'; })();
 
 window.t = function(key, vars){
   const tbl = S[window.LANG] || S.en;
@@ -291,7 +512,7 @@ window.t = function(key, vars){
 };
 
 window.setLang = function(l){
-  window.LANG = (l==='es') ? 'es' : 'en';
+  window.LANG = S[l] ? l : 'en';
   localStorage.setItem('nokings.lang', window.LANG);
   document.documentElement.lang = window.LANG;
   if(typeof window.applyI18n==='function') window.applyI18n();

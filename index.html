@@ -513,7 +513,8 @@ function applyI18n(){
   // Rules body: English lives in the DOM (cached once); Spanish comes from the dictionary.
   const rb=document.getElementById('rulesBody');
   if(rb){ if(_rulesEnHTML===null) _rulesEnHTML=rb.innerHTML;
-    rb.innerHTML = (window.LANG==='es' && STR.es['rules.body']) ? STR.es['rules.body'] : _rulesEnHTML; }
+    const body = STR[window.LANG] && STR[window.LANG]['rules.body'];
+    rb.innerHTML = body ? body : _rulesEnHTML; }
 }
 window.applyI18n=applyI18n;
 function onLangChange(){ buildSetup(); renderSettings(); if(G && !G.over) render(); }
@@ -576,7 +577,7 @@ function showAbout(show,from){
 function renderSettings(){
   const lg=document.getElementById('segLang');
   if(lg){ lg.innerHTML='';
-    [['en','English'],['es','Español']].forEach(([code,label])=>{ const b=document.createElement('button');
+    [['en','English'],['es','Español'],['fr','Français']].forEach(([code,label])=>{ const b=document.createElement('button');
       b.textContent=label; b.className=window.LANG===code?'on':''; b.onclick=()=>setLang(code); lg.appendChild(b); }); }
   const sl=document.getElementById('segLen');
   if(sl){ sl.innerHTML='';
