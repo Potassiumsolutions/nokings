@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/readme-banner.jpg" alt="No Kings" width="100%">
+<img src="assets/banner.jpg" alt="No Kings — Eliminate the Reign" width="100%">
 
 # No Kings
 
