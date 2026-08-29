@@ -16,6 +16,16 @@ No Kings is played with a **standard 52-card deck** (plus 2 Jokers), with the co
 - **Goal:** First to **50 points** (or a Short Game to 20)
 - **Languages:** English · Español · Français (in-app Language toggle)
 
+## Get the physical game 🃏
+
+No Kings is a **real, published game** — you can order professionally printed copies from The Game Crafter:
+
+- 🎴 **[No Kings — Standard Edition](https://www.thegamecrafter.com/games/no-kings-2-to-4)** — 4 suits · 2–4 players
+- 👑 **[No Kings — Full Edition](https://www.thegamecrafter.com/games/no-kings-2-to-6)** — 6 suits · 2–6 players
+- 📖 **[No Kings — Rulebook](https://www.thegamecrafter.com/games/no-kings-instructions)** — the printed fold-out rules
+
+Or [play free in your browser](https://potassiumsolutions.github.io/nokings).
+
 ## The Cast & the Deck
 
 | Card | Who they are |
