@@ -1,8 +1,20 @@
+<div align="center">
+
+<img src="assets/readme-banner.jpg" alt="No Kings" width="100%">
+
 # No Kings
 
 **A card game about toppling monarchy.** Play the whole deck against the Crown — first to 50 points founds the new order.
 
-🎴 **Play free:** [potassiumsolutions.github.io/nokings](https://potassiumsolutions.github.io/nokings)
+[![Play free](https://img.shields.io/badge/▶_Play_free-in_browser-c1121f?style=for-the-badge)](https://potassiumsolutions.github.io/nokings)
+[![Get the game](https://img.shields.io/badge/🃏_Get_the_game-The_Game_Crafter-8a6a1a?style=for-the-badge)](https://www.thegamecrafter.com/games/no-kings-2-to-6)
+
+![Players](https://img.shields.io/badge/players-2–6-8a1a12)
+![Goal](https://img.shields.io/badge/goal-first_to_50-8a1a12)
+![PWA](https://img.shields.io/badge/PWA-offline_ready-2a0f12)
+![Languages](https://img.shields.io/badge/languages-EN_·_ES_·_FR-2a0f12)
+
+</div>
 
 *The realm of Cardlandia is fracturing. The Crown hoards wealth while the streets boil with unrest — yet absolute power is an intoxicating poison. Topple the old regime, claim the glory, and gather 50 points to found a new order. But beware: if tyranny secures a stronghold before the revolution succeeds, the old world wins.*
 
