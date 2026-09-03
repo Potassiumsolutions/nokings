@@ -1217,6 +1217,16 @@ setInterval(()=>{ if(G&&!G.over) refreshActions(); }, 300);
 
 /* service worker */
 if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
+
+// ---- open counter (once per browser session, only on the live site) ----
+// Read-only badge: https://ksol-counter.ksoldesigns.workers.dev/badge/nokings.svg
+try{
+  if(location.hostname==="potassiumsolutions.github.io" && !sessionStorage.getItem("ksolHit")){
+    sessionStorage.setItem("ksolHit","1");
+    fetch("https://ksol-counter.ksoldesigns.workers.dev/hit/nokings",{mode:"cors",keepalive:true}).catch(()=>{});
+  }
+}catch(e){}
+
 </script>
 </body>
 </html>
