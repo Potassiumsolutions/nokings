@@ -123,13 +123,15 @@ function pose(x, y, z, q, s = 1, extra = {}) { return Object.assign({ p: new THR
 function hash(id) { let h = 0; for (const ch of String(id)) h = (h * 31 + ch.charCodeAt(0)) | 0; return h; }
 
 /* table layout (world space) */
+/* phones: table cards drawn bigger (camera also sits closer) */
+const TS = () => portrait ? 1.22 : 1;
 function dims() { return portrait ? { rx: 3.1, rz: 4.1 } : { rx: 5.0, rz: 3.3 }; }
 function seatAngles(m) {   /* rivals around the far side; on phones the arc wraps further down the sides */
   const a0 = portrait && m > 2 ? Math.PI * 0.8 : Math.PI, span = portrait && m > 2 ? Math.PI * 1.4 : Math.PI;
   return Array.from({ length: m }, (_, i) => a0 + span * (i + 0.5) / m);
 }
-const DECK = () => portrait ? new THREE.Vector3(-0.85, 0, -0.35) : new THREE.Vector3(-1.0, 0, 0.0);
-const DISC = () => portrait ? new THREE.Vector3(0.85, 0, -0.35) : new THREE.Vector3(1.0, 0, 0.0);
+const DECK = () => portrait ? new THREE.Vector3(-0.95, 0, -0.45) : new THREE.Vector3(-1.0, 0, 0.0);
+const DISC = () => portrait ? new THREE.Vector3(0.95, 0, -0.45) : new THREE.Vector3(1.0, 0, 0.0);
 
 /* viewer hand lives in camera space so it always fits the screen */
 function handPoses(list, selIds) {
@@ -159,10 +161,10 @@ function compute() {
   const { rx, rz } = dims(), T = {}, meta = { seats: [] };
   // deck (face down) and discard (face up, a little scattered)
   const dk = DECK(), ds = DISC();
-  G.deck.forEach((c, i) => { T[c.id] = pose(dk.x, i * STEP + THICK / 2, dk.z, flatQ(false), 1, { zone: 'deck', face: false }); });
+  G.deck.forEach((c, i) => { T[c.id] = pose(dk.x, i * STEP + THICK / 2, dk.z, flatQ(false), TS(), { zone: 'deck', face: false }); });
   G.discard.forEach((c, i) => {
     const h = hash(c.id), top = i >= G.discard.length - 4;
-    T[c.id] = pose(ds.x + ((h % 7) - 3) * 0.02, i * STEP + THICK / 2, ds.z + (((h >> 3) % 7) - 3) * 0.02, flatQ(true, ((h >> 6) % 21 - 10) * 0.018), 1, { zone: 'discard', face: top });
+    T[c.id] = pose(ds.x + ((h % 7) - 3) * 0.02, i * STEP + THICK / 2, ds.z + (((h >> 3) % 7) - 3) * 0.02, flatQ(true, ((h >> 6) % 21 - 10) * 0.018), TS(), { zone: 'discard', face: top });
   });
   const tgt = S.targetKingId;
   order.forEach((p, si) => {
@@ -173,8 +175,8 @@ function compute() {
     const inward = seat.clone().negate().normalize(), tang = new THREE.Vector3(-inward.z, 0, inward.x);
     meta.seats.push({ id: p.id, pos: seat.clone(), name: H.pname(p), score: p.score, turn: p === H.cur(), viewer: isViewer });
     // standing Kings, face up, readable
-    const ks = isViewer ? 0.82 : (portrait ? 0.86 : 0.74);
-    const kc = isViewer ? new THREE.Vector3(0, 0, portrait ? 1.45 : 1.45) : seat.clone().addScaledVector(inward, portrait ? 1.35 : 1.45);
+    const ks = isViewer ? 0.82 * TS() : (portrait ? 1.05 : 0.74);
+    const kc = isViewer ? new THREE.Vector3(0, 0, portrait ? 1.45 : 1.45) : seat.clone().addScaledVector(inward, portrait ? (Math.abs(inward.x) > 0.6 ? 1.05 : 1.35) : 1.45);
     const kn = p.kings.length, kgap = CW * ks * 1.12;
     p.kings.forEach((k, i) => {
       const off = (i - (kn - 1) / 2) * kgap, isT = tgt === k.id;
@@ -183,9 +185,9 @@ function compute() {
       T[k.id] = pose(pp.x, THICK / 2 + (isT ? 0.35 : 0), pp.z, flatQ(true), isT ? ks * 1.25 : ks, { zone: 'king', face: true, target: isT, promoted: !!k.promoted });
     });
     // won piles (fallen / promoted kings) — small, face up, top card shows
-    const pc = isViewer ? new THREE.Vector3(portrait ? 2.35 : 3.3, 0, portrait ? 1.6 : 1.2) : seat.clone().addScaledVector(inward, 0.45).addScaledVector(tang, 1.25);
+    const pc = isViewer ? new THREE.Vector3(portrait ? 2.2 : 3.3, 0, portrait ? 2.15 : 1.2) : seat.clone().addScaledVector(inward, 0.45).addScaledVector(tang.z > 0.2 ? tang.clone().negate() : tang, 1.25 * TS());
     p.points.forEach((pt, i) => {
-      T[pt.card.id] = pose(pc.x + i * 0.05, i * STEP + THICK / 2, pc.z - i * 0.03, flatQ(true, -0.25), 0.55, { zone: 'won', face: i === p.points.length - 1 });
+      T[pt.card.id] = pose(pc.x + i * 0.05, i * STEP + THICK / 2, pc.z - i * 0.03, flatQ(true, -0.25), 0.55 * TS(), { zone: 'won', face: i === p.points.length - 1 });
     });
     // hands
     if (isViewer && p.human) {
@@ -195,8 +197,8 @@ function compute() {
       const n = p.hand.length, yaw = Math.atan2(inward.x, inward.z) + Math.PI;
       p.hand.forEach((c, i) => {
         const t = n > 1 ? i / (n - 1) - 0.5 : 0;
-        const pp = hc.clone().addScaledVector(tang, t * Math.min(1.6, n * 0.3));
-        T[c.id] = pose(pp.x, THICK / 2 + i * 0.004 + 0.02, pp.z, flatQ(false, yaw + t * 0.5), 0.6, { zone: 'opphand', face: false });
+        const pp = hc.clone().addScaledVector(tang, t * Math.min(1.6, n * 0.3) * TS());
+        T[c.id] = pose(pp.x, THICK / 2 + i * 0.004 + 0.02, pp.z, flatQ(false, yaw + t * 0.5), 0.6 * TS(), { zone: 'opphand', face: false });
       });
     }
   });
@@ -325,7 +327,9 @@ function updateLabels(meta) {
     drawLabel(sp, s);
     const out = s.viewer ? null : s.pos.clone().normalize();
     if (s.viewer) sp.position.set(portrait ? 0 : -3.3, portrait ? 0.15 : 0.3, portrait ? 0.62 : 1.2);   /* by your own Kings, clear of the deck and hand */
-    else sp.position.copy(s.pos).addScaledVector(new THREE.Vector3(out.x, 0, out.z), 0.15).setY(0.9);
+    else { sp.position.copy(s.pos).addScaledVector(new THREE.Vector3(out.x, 0, out.z), 0.15).setY(0.9);
+      if (portrait) { sp.position.x = THREE.MathUtils.clamp(sp.position.x, -2.25, 2.25);
+        if (Math.abs(out.x) > 0.6) sp.position.z = s.pos.z + 1.15; } }   /* side seats: tag just below their cards, off their Kings */
     const sc = portrait ? 1.7 : 2.0; sp.scale.set(sc, sc / 4, 1);
   });
   for (const [id, sp] of labels) if (!ids.has(id)) { labelGroup.remove(sp); labels.delete(id); }
@@ -370,7 +374,8 @@ function fitCamera() {
   const elev = THREE.MathUtils.degToRad(portrait ? 66 : 56);
   const look = new THREE.Vector3(0, 0, portrait ? 1.5 : 1.35);
   const hHalf = Math.atan(Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect);
-  const dist = Math.max((rx + 1.2) / Math.tan(hHalf), (rz + 1.3) * 2.1, 8.5);
+  const dist = portrait ? Math.max((rx + 0.55) / Math.tan(hHalf), (rz + 0.6) * 1.9, 7.5)   /* phones: closer, rim may crop at the sides */
+                        : Math.max((rx + 1.2) / Math.tan(hHalf), (rz + 1.3) * 2.1, 8.5);
   camera.position.set(0, Math.sin(elev) * dist, look.z + Math.cos(elev) * dist);
   camera.lookAt(look); camera.updateProjectionMatrix(); camera.updateMatrixWorld();
   if (wasPortrait !== portrait || !tableGroup) buildTable();

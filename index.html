@@ -218,6 +218,7 @@
   #t3d{display:none;position:relative;width:100%;height:clamp(340px,62dvh,760px);height:clamp(340px,62vh,760px);border-radius:14px;overflow:hidden;border:1px solid var(--line);margin:4px 0 10px;background:#140a0c;touch-action:manipulation;-webkit-user-select:none;user-select:none}
   @supports (height:1dvh){ #t3d{height:clamp(340px,62dvh,760px)} }
   body.t3d #t3d{display:block}
+  @media (max-width:600px){ #t3d{height:clamp(340px,68vh,760px)} @supports (height:1dvh){ #t3d{height:clamp(340px,68dvh,760px)} } }
   body.t3d .table-area, body.t3d #hand, body.t3d #opponents{display:none}
 </style>
 </head>
@@ -440,7 +441,7 @@
 <script src="assets/i18n.js?v=2"></script>
 <script src="assets/manifest.js"></script>
 <script src="assets/sfx.js?v=2"></script>
-<script type="module" src="assets/table3d.js?v=1"></script>
+<script type="module" src="assets/table3d.js?v=2"></script>
 <script>
 /* ============================ DATA ============================ */
 const SUITS = {
