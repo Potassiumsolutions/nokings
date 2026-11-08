@@ -1,5 +1,5 @@
-const CACHE='nokings-v0-43';
-const ASSETS=['./','index.html','manifest.json','assets/i18n.js'];
+const CACHE='nokings-v0-44';
+const ASSETS=['./','index.html','manifest.json','assets/i18n.js?v=2'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE&&k.startsWith('nokings-')).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',e=>{

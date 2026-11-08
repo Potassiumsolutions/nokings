@@ -40,6 +40,7 @@ S.en['set.track']="Music track";                S.es['set.track']="Pista musical
 S.en['set.volume']="Volume";                    S.es['set.volume']="Volumen";
 S.en['set.sfx']="Sound effects & voices";        S.es['set.sfx']="Efectos y voces";
 S.en['set.vid']="Fallen-King video";             S.es['set.vid']="Vídeo del Rey caído";
+S.en['set.t3d']="3D card table";                S.es['set.t3d']="Mesa de cartas 3D";
 S.en['set.language']="Language";                 S.es['set.language']="Idioma";
 S.en['toggle.on']="On";                          S.es['toggle.on']="Sí";
 S.en['toggle.off']="Off";                        S.es['toggle.off']="No";
@@ -305,6 +306,7 @@ S.fr['set.track']="Piste musicale";
 S.fr['set.volume']="Volume";
 S.fr['set.sfx']="Effets sonores et voix";
 S.fr['set.vid']="Vidéo du Roi déchu";
+S.fr['set.t3d']="Table de cartes 3D";
 S.fr['set.language']="Langue";
 S.fr['toggle.on']="Oui";
 S.fr['toggle.off']="Non";

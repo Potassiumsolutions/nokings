@@ -214,6 +214,11 @@
   .store-btn .st span{color:var(--muted);font-size:12.5px}
   .about-links{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
   .about-links a{color:var(--gold);text-decoration:none;font-size:14px;font-weight:600}
+  /* ---- 3D table view (assets/table3d.js) ---- */
+  #t3d{display:none;position:relative;width:100%;height:clamp(340px,62dvh,760px);height:clamp(340px,62vh,760px);border-radius:14px;overflow:hidden;border:1px solid var(--line);margin:4px 0 10px;background:#140a0c;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+  @supports (height:1dvh){ #t3d{height:clamp(340px,62dvh,760px)} }
+  body.t3d #t3d{display:block}
+  body.t3d .table-area, body.t3d #hand, body.t3d #opponents{display:none}
 </style>
 </head>
 <body>
@@ -260,6 +265,7 @@
     <div class="setrow"><span data-i18n="set.volume">Volume</span><input type="range" id="volMusic" min="0" max="100" step="5" oninput="setMusVol(this.value)"></div>
     <div class="setrow"><span data-i18n="set.sfx">Sound effects &amp; voices</span><button class="tgl" id="tglSfx" onclick="toggleSfx()">On</button></div>
     <div class="setrow"><span data-i18n="set.vid">Fallen-King video</span><button class="tgl" id="tglVid" onclick="toggleVid()">On</button></div>
+    <div class="setrow"><span data-i18n="set.t3d">3D card table</span><button class="tgl" id="tglT3d" onclick="toggleT3()">On</button></div>
   </div>
   <div class="setup-card credits">
     <h3 class="credits-h" data-i18n="credits.h">Credits</h3>
@@ -379,6 +385,8 @@
 
   <div class="opponents" id="opponents"></div>
 
+  <div id="t3d" aria-label="3D card table"></div>
+
   <div class="table-area">
     <h3><span data-i18n="table.h3">Kings standing on the table</span> <span class="mini" id="tableHint"></span></h3>
     <div class="table-kings" id="tableKings"></div>
@@ -429,9 +437,10 @@
   <div id="log"></div>
 </div>
 
-<script src="assets/i18n.js"></script>
+<script src="assets/i18n.js?v=2"></script>
 <script src="assets/manifest.js"></script>
 <script src="assets/sfx.js?v=2"></script>
+<script type="module" src="assets/table3d.js?v=1"></script>
 <script>
 /* ============================ DATA ============================ */
 const SUITS = {
@@ -590,6 +599,8 @@ function renderSettings(){
   if(ts){ ts.textContent=SFXon?ON:OFF; ts.classList.toggle('on',SFXon); }
   const tv=document.getElementById('tglVid');
   if(tv){ tv.textContent=VIDon?ON:OFF; tv.classList.toggle('on',VIDon); }
+  const t3=document.getElementById('tglT3d');
+  if(t3){ t3.textContent=T3on?ON:OFF; t3.classList.toggle('on',T3on); }
   const seg=document.getElementById('segTrack'); seg.innerHTML='';
   Object.entries(TRACKS).forEach(([k,t])=>{ const b=document.createElement('button');
     b.textContent=t.name; b.className=MUS.track===k?'on':'';
@@ -674,6 +685,31 @@ function hideToppleVid(){
   clearTimeout(_vidSafety); _vidPlaying=false;
 }
 function toggleVid(){ VIDon=!VIDon; saveVid(); if(!VIDon) hideToppleVid(); renderSettings(); }
+
+/* ---- 3D card table: assets/table3d.js draws the game state; these hooks let it read state and send taps ---- */
+const T3_LS='nokings.3d';
+let T3on = JSON.parse(localStorage.getItem(T3_LS) ?? 'true');
+function _findCard(id){
+  if(!G) return null;
+  const all=[G.deck, G.discard]; G.players.forEach(p=>{ all.push(p.hand, p.kings, p.points.map(x=>x.card)); });
+  for(const list of all){ const c=list.find(x=>x.id===id); if(c) return c; }
+  return null;
+}
+window.T3_HOST={
+  state:()=>({G, sel, targetKingId, cfg}),
+  viewer:()=>{ const c=cur(); return c.human ? c : G.players[0]; },   /* whose hand is shown face-up near the camera */
+  cur:()=>cur(),
+  pname:p=>p.name,
+  artKey,
+  findCard:_findCard,
+  canDraw:()=>isHumanTurn() && !drewThisTurn,
+  onHandCard:id=>{ if(G && !G.over && isHumanTurn()) handCardClick(id); },
+  onKing:id=>{ if(G && !G.over) pickTarget(id); },
+  onDeck:()=>{ if(G && !G.over && isHumanTurn() && !drewThisTurn) humanDraw(); },
+  onReady:()=>applyT3(),
+};
+function applyT3(){ const ok = window.T3 ? window.T3.setEnabled(T3on) : false; document.body.classList.toggle('t3d', !!ok); if(ok && G) render(); }
+function toggleT3(){ T3on=!T3on; localStorage.setItem(T3_LS, JSON.stringify(T3on)); applyT3(); renderSettings(); }
 
 /* ---- "Topple a King" guide popup (opened from the dock button) ---- */
 let guideOpen=false;
@@ -1221,6 +1257,7 @@ function render(){
     p.hand.forEach(c=>{ hand.appendChild(cardEl(c,{sel:sel.includes(c.id),onClick:handCardClick})); });
   }
   applyFeed();
+  if(window.T3 && window.T3.enabled) window.T3.sync();
 }
 
 function refreshActions(mode){
