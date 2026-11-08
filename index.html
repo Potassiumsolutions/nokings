@@ -431,7 +431,7 @@
 
 <script src="assets/i18n.js"></script>
 <script src="assets/manifest.js"></script>
-<script src="assets/sfx.js"></script>
+<script src="assets/sfx.js?v=2"></script>
 <script>
 /* ============================ DATA ============================ */
 const SUITS = {
@@ -608,19 +608,45 @@ function toggleSfx(){ SFXon=!SFXon; saveSfx(); renderSettings(); if(SFXon) playE
 const _sfxCache={};
 function _sfxAudio(slug){ let a=_sfxCache[slug]; if(!a){ a=new Audio(`assets/sfx/${slug}.mp3`); a.preload='auto'; _sfxCache[slug]=a; } return a; }
 function _sfxPlay(slug,vol){ if(!slug)return; const a=_sfxAudio(slug); a.volume=vol; try{a.currentTime=0;}catch(e){} a.play().catch(()=>{}); }
-/* play one event's ambient bed + a random (or run-matched) voice line */
+/* shuffle-bag pick: every line in a set plays once before any repeats (and never twice in a row) */
+const _sfxBags={}, _sfxLast={};
+function _sfxPick(id, list){
+  if(!Array.isArray(list)) return list;
+  if(list.length<2) return list[0];
+  let bag=_sfxBags[id];
+  if(!bag||!bag.length){
+    bag=list.slice(); for(let i=bag.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [bag[i],bag[j]]=[bag[j],bag[i]]; }
+    if(bag[bag.length-1]===_sfxLast[id]) [bag[0],bag[bag.length-1]]=[bag[bag.length-1],bag[0]];
+    _sfxBags[id]=bag;
+  }
+  return (_sfxLast[id]=bag.pop());
+}
+/* Cues play one after another: each waits for the previous cue (bed + voice) to finish, so e.g. a
+   topple never talks over the "King drawn" line — even when the same player topples it right away. */
+const SFX_LEAD=180, SFX_GAP=300, SFX_MAX_WAIT=10000;
+let _sfxBusyUntil=0;
+function _sfxLen(slug){ const d=window.SFX_DUR&&window.SFX_DUR[slug]; return d||2500; }
+/* play one event's ambient bed + a voice line; returns the ms until it starts (0 = now, -1 = not played) */
 function playEvent(key, opts={}){
-  if(!SFXon || !window.SFX) return;
-  const ev=window.SFX[key]; if(!ev) return;
-  _sfxPlay(ev.bed, 0.42);
-  const lines=ev.lines||[]; if(!lines.length) return;
+  if(!SFXon || !window.SFX) return -1;
+  const ev=window.SFX[key]; if(!ev) return -1;
+  const lines=ev.lines||[];
   let slug=null;
-  if(typeof lines[0]==='object'){ // run-based (revolt): highest threshold <= actual run
+  if(lines.length && typeof lines[0]==='object'){ // run-based (revolt): highest threshold <= actual run
     const run=opts.run||4; let best=lines[0];
-    for(const l of lines){ if(run>=l.run) best=l; } slug=best.s;
-  } else { slug=lines[Math.floor(Math.random()*lines.length)]; }
-  /* let the bed lead the voice slightly so both are audible */
-  setTimeout(()=>_sfxPlay(slug, 0.92), 180);
+    for(const l of lines){ if(run>=l.run) best=l; } slug=_sfxPick(key+':'+best.run, best.s);
+  } else if(lines.length){ slug=_sfxPick(key, lines); }
+  const now=Date.now(), wait=Math.max(0,_sfxBusyUntil-now);
+  if(wait>SFX_MAX_WAIT) return -1;               // far behind: drop it rather than pile up a backlog
+  _sfxBusyUntil=now+wait+Math.max(ev.bed?_sfxLen(ev.bed):0, slug?SFX_LEAD+_sfxLen(slug):0)+SFX_GAP;
+  if(ev.bed) _sfxAudio(ev.bed); if(slug) _sfxAudio(slug);   // start loading now
+  setTimeout(()=>{
+    if(!SFXon) return;
+    _sfxPlay(ev.bed, 0.42);
+    /* let the bed lead the voice slightly so both are audible */
+    if(slug) setTimeout(()=>_sfxPlay(slug, 0.92), SFX_LEAD);
+  }, wait);
+  return wait;
 }
 
 /* ---- Fallen-King cinematic: plays a short video overlay when a King is toppled ---- */
@@ -876,8 +902,8 @@ function applyCombo(p, cards, target, ev){
   // spend the used cards to discard (remove from hand)
   cards.forEach(c=>{ p.hand=p.hand.filter(h=>h.id!==c.id); G.discard.push(c); });
   log(t('log.applyCombo',{name:p.name, desc:ev.desc, n:removed.length}));
-  if(ev.sfx) playEvent(ev.sfx,{run:ev.run});
-  if(removed.length) playToppleVideo();
+  const sfxWait = ev.sfx ? playEvent(ev.sfx,{run:ev.run}) : -1;
+  if(removed.length){ if(sfxWait>0) setTimeout(playToppleVideo, sfxWait); else playToppleVideo(); }  // video lands with its (possibly queued) sound
   if(tgt){
     const suits=removed.map(k=>(SUITS[k.suit]?SUITS[k.suit].sym:'♚')+(k.promoted?'*':'')).join(' ');
     feedAdd(t('feed.toppled',{name:p.name, n:removed.length, suits, owner:tgt.owner.name, desc:ev.desc}));
